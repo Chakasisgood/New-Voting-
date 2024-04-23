@@ -1,15 +1,23 @@
 <?php include 'includes/session.php'; ?>
 <?php include 'includes/slugify.php'; ?>
 <?php include 'includes/header.php'; ?>
+<?php include 'includes/conn.php' ?>
 
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
 
     <?php include 'includes/navbar.php'; ?>
     <?php include 'includes/menubar.php'; ?>
+    <style>
+      #countdown {
+        font-size: 20px;
+        font-weight: bold;
+      }
+    </style>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
@@ -49,7 +57,7 @@
         <div class="row">
           <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-aqua">
+            <div class="small-box bg-green  ">
               <div class="inner">
                 <?php
                 $sql = "SELECT * FROM positions";
@@ -69,7 +77,7 @@
           <!-- ./col -->
           <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-green">
+            <div class="small-box bg-orange">
               <div class="inner">
                 <?php
                 $sql = "SELECT * FROM candidates";
@@ -89,7 +97,7 @@
           <!-- ./col -->
           <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-yellow">
+            <div class="small-box bg-teal">
               <div class="inner">
                 <?php
                 $sql = "SELECT * FROM voters";
@@ -109,7 +117,7 @@
           <!-- ./col -->
           <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-red">
+            <div class="small-box bg-aqua">
               <div class="inner">
                 <?php
                 $sql = "SELECT * FROM votes GROUP BY voters_id";
@@ -128,6 +136,22 @@
           </div>
           <!-- ./col -->
         </div>
+
+
+        <!-- Countdown Time -->
+
+        <div id="countdown"></div>
+        <?php
+
+        $sql = "SELECT countdown FROM countdown ORDER BY id DESC LIMIT 1";
+        $result = $conn->query($sql);
+
+        $countdown = null;
+        if ($result->num_rows > 0) {
+          $row = $result->fetch_assoc();
+          $countdown = $row["countdown"];
+        }
+        ?>
 
         <div class="row">
           <div class="col-xs-12">
@@ -192,6 +216,28 @@
     $varray = json_encode($varray);
   ?>
     <script>
+      // Set the countdown timer
+      var countdownEnd = new Date("<?php echo $countdown; ?>").getTime();
+
+      var countdownFunction = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = countdownEnd - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML = "VOTING ARE NOW OFFICIALY OPEN FOR: " + days + "d " + hours + "h " +
+          minutes + "m " + seconds + "s ";
+
+        if (distance < 0) {
+          clearInterval(countdownFunction);
+          document.getElementById("countdown").innerHTML = "VOTING IS NOW OFFICIALY CLOSED!!";
+        }
+      }, 1000);
+
+
       $(function() {
         var rowid = '<?php echo $row['id']; ?>';
         var description = '<?php echo slugify($row['description']); ?>';
@@ -213,7 +259,7 @@
         var barChartOptions = {
           //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
           scaleBeginAtZero: true,
-          //Boolean - Whether grid lines are shown across the chart
+          //Boolean - Whether grid  lines are shown across the chart
           scaleShowGridLines: true,
           //String - Colour of the grid lines
           scaleGridLineColor: 'rgba(0,0,0,.05)',
