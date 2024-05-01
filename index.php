@@ -10,23 +10,30 @@ if (isset($_SESSION['voter'])) {
 ?>
 <?php include 'includes/header.php'; ?>
 <?php include 'includes/conn.php'; ?>
+<style>
+	#countdown {
+		font-size: 15px;
+		font-weight: bold;
+		opacity: 0.7;
+	}
+</style>
 
 <body class="hold-transition login-page">
 	<div class="login-box">
 		<div class="login-logo">
-			<b>Election Student Commision</b>
+			<b>ELECTION STUDENT COMMISSION</b>
 			<div id="countdown"></div>
 		</div>
 
 		<div class="login-box-body">
-			<p class="login-box-msg">Sign in to start your session</p>
+
 
 			<form action="login.php" method="POST">
-				<div class="form-group has-feedback">
-					<input type="text" class="form-control" name="voter" placeholder="Student ID" required>
+				<div class="form-group has-feedback" style="width: 400px;">
+					<input type=" text" class="form-control" name="voter" placeholder="Student ID" required>
 					<span class="glyphicon glyphicon-user form-control-feedback"></span>
 				</div>
-				<div class="form-group has-feedback">
+				<div class="form-group has-feedback" style="width: 400px;">
 					<input type="password" class="form-control" name="password" placeholder="Password" required>
 					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 				</div>

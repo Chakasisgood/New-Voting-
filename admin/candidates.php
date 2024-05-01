@@ -65,7 +65,7 @@
 
         <!-- Set Time for Voting -->
         <form action="candidates.php" method="post">
-          <label id="countdown" for="countdown">Set Time and Date for Voting</label>
+          <label id="countdown" for="countdown">Set Time for Voting</label>
           <input type="datetime-local" id="countdown" name="countdown" required><br>
           <button id="button" class="settime" type="submit">Set Time</button>
         </form>
@@ -100,7 +100,7 @@
 
                       // Insert countdown datetime into database
                       $sql = "INSERT INTO countdown (countdown) VALUES ('$countdown')";
-                      if ($conn->query($sql) === TRUE) {  
+                      if ($conn->query($sql) === TRUE) {
                         echo "<script>alert('Voting Countdown Save Successfully');</script>";
                       } else {
                         echo "Error: " . $sql . "<br>" . $conn->error;

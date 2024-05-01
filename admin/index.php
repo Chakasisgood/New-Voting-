@@ -10,14 +10,14 @@ if (isset($_SESSION['admin'])) {
 <body class="hold-transition login-page">
 	<div class="login-box">
 		<div class="login-logo">
-			<b>Election Admin Commision</b>
+			<b>ELECTION ADMIN COMMISSION</b>
 		</div>
 
 		<div class="login-box-body">
 			<p class="login-box-msg"> </p>
 
 			<form action="login.php" method="POST">
-				<div class="form-group has-feedback">
+				<div class="form-group has-feedback" style="width: 400px;">
 					<input type="text" class="form-control" name="username" placeholder="Admin" required>
 					<span class="glyphicon glyphicon-user form-control-feedback"></span>
 				</div>

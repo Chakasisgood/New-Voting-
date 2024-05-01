@@ -13,6 +13,65 @@ if ($result->num_rows > 0) {
 }
 
 ?>
+<style>
+  /* Slideshow container */
+  .slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+  }
+
+  .image {
+    height: 20rem;
+    border-radius: 10px;
+
+  }
+
+  /* Number text (1/3 etc) */
+  .numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+  }
+
+  /* The dots/bullets/indicators */
+  .dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+  }
+
+
+  /* Fading animation */
+  .fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0.4;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* On smaller screens, decrease text size */
+  @media (max-width: 570px) {
+    .image {
+      max-width: 20rem;
+      height: 15rem;
+    }
+  }
+</style>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +94,13 @@ if ($result->num_rows > 0) {
 
   <section class="header">
     <nav>
-      <tag><a>Eastern Visayas State University</a></tag>
+      <div class="all-header">
+        <img src="images/logo.gif">
+        <tag>
+          <a>EASTERN VISAYAS</a>
+          <p>STATE UNIVERSITY</p>
+        </tag>
+      </div>
       <div class="links" id="links">
         <i class="bx bx-x" onclick="Hide()"></i>
         <ul>
@@ -67,6 +132,25 @@ if ($result->num_rows > 0) {
         election ID. Even the user can view the election result. -->
       </p>
       <div id="countdown"></div>
+      <br>
+      <!-- <div class="slideshow-container">
+
+        <div class="mySlides fade">
+          <img class="image" src="images/ComLab.jpeg">
+        </div>
+
+        <div class="mySlides fade">
+          <img class="image" src="images/SpeechLab.jpeg">
+        </div>
+
+        <div class="mySlides fade">
+          <img class="image" src="images/EVSU.png">
+        </div>
+
+      </div> -->
+      <br>
+
+
     </div>
   </section>
   <br>
@@ -82,28 +166,21 @@ if ($result->num_rows > 0) {
         <div class="clo">
           <h3>Step 1</h3>
           <p>
-            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Repellendus cum esse recusandae! Cupiditate, soluta, iusto tempora
-              culpa est repudiandae sed laudantium quam ea saepe
-              repellendus.</span>
+            <span>First go to the SSG office so you can be able to vote your Fingerprint and Register your Information</span>
           </p>
         </div>
         <div class="clo">
           <h3>Step 2</h3>
           <p>
-            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Repellendus cum esse recusandae! Cupiditate, soluta, iusto tempora
-              culpa est repudiandae sed laudantium quam ea saepe
-              repellendus</span>.
+            <span>After Registration, go to the page of the Biometric Voting System, and Login using your Student ID and Paasword
+              you created in rigistration
+            </span>.
           </p>
         </div>
         <div class="clo">
           <h3>Step 3</h3>
           <p>
-            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Repellendus cum esse recusandae! Cupiditate, soluta, iusto tempora
-              culpa est repudiandae sed laudantium quam ea saepe
-              repellendus</span>.
+            <span>After you login, you will ba able to vote your favoorite candidate.</span>.
           </p>
         </div>
       </div>
@@ -236,10 +313,10 @@ if ($result->num_rows > 0) {
 
       if (distance < 0) {
         clearInterval(countdownFunction);
-        document.getElementById("countdown").innerHTML = "VOTING IS NOW OFFICAILY CLOSED!!";
-        var listItem = document.getElementById("voteBtn")
+        document.getElementById("countdown").innerHTML = "VOTING IS NOW OFFICIALY CLOSED!!";
+        // var listItem = document.getElementById("voteBtn")
         if (listItem) {
-          listItem.setAttribute('disabled', true);
+          // listItem.setAttribute('disabled', false);
           listItem.style.pointerEvents = 'none';
         }
 
@@ -255,6 +332,30 @@ if ($result->num_rows > 0) {
 
     function Hide() {
       Links.style.right = "-200px";
+    }
+
+
+    // SLIDER
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      // let dots = document.getElementsByClassName("dot");
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) {
+        slideIndex = 1
+      }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].className = slides[i].className.replace(" active", "");
+      }
+      slides[slideIndex - 1].style.display = "block";
+      slides[slideIndex - 1].className += " active";
+      setTimeout(showSlides, 3000); // Change image every 2 seconds
     }
   </script>
 </body>
