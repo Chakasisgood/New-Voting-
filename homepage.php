@@ -113,24 +113,6 @@ if ($result->num_rows > 0) {
     </nav>
     <div class="text">
       <h1>BIOMETRIC VOTING SYSTEM</h1>
-      <p>
-        <!-- The Biometric Voting Project is an application where the user
-        is recognized as his fingerprint pattern. Since the fingerprint
-        pattern of each human being is unique, the voter can be easily authenticated.
-        The system reads the voter fingerprint uniquely which permits me to vote.
-        Admin has the right to add candidate names and photos of who are running for
-        a representative in every election position. Admin will authenticate the user
-        by verifying the user’s identity proof, and then Admin will register the voter.
-        The number of candidates added to the system by the admin will be
-        automatically deleted after the completion of the election.
-        Admin must add the date when the election is going to end. Once the user
-        has the user ID and password from the admin, they can login and vote for
-        the candidate who has been nominated. The system will allow the user to vote
-        for only one candidate. The system will allow the user to vote once for a
-        particular election. Admins can add any number of candidates when the new
-        election is announced. Admins can view the election results by using the
-        election ID. Even the user can view the election result. -->
-      </p>
       <div id="countdown"></div>
       <br>
       <!-- <div class="slideshow-container">

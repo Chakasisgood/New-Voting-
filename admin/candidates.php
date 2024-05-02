@@ -87,8 +87,8 @@
                     <th class="hidden"></th>
                     <th>Position</th>
                     <th>Photo</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
+                    <th>Fullname</th>
+                    <th>Age</th>
                     <th>Platform</th>
                     <th>Action</th>
                   </thead>

@@ -14,21 +14,37 @@
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
 <!-- Data Table Initialize -->
+<!-- jQuery UI 1.11.4 -->
+<script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
+<!-- Moment JS -->
+<script src="../bower_components/moment/moment.js"></script>
+<!-- ChartJS -->
+<script src="../bower_components/chart.js/Chart.js"></script>
+<!-- ChartJS Horizontal Bar -->
+<script src="../bower_components/chart.js/Chart.HorizontalBar.js"></script>
+<!-- daterangepicker -->
+<script src="../bower_components/moment/min/moment.min.js"></script>
+<script src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- datepicker -->
+<script src="../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!-- bootstrap time picker -->
+<script src="../plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<!-- Active Script -->
 <script>
-  $(function () {
+  $(function() {
     $('#example1').DataTable()
-  	var bookTable = $('#booklist').DataTable({
-      'paging'      : true,
+    var bookTable = $('#booklist').DataTable({
+      'paging': true,
       'lengthChange': false,
-      'searching'   : true,
-      'ordering'    : true,
-      'info'        : false,
-      'autoWidth'   : false
+      'searching': true,
+      'ordering': true,
+      'info': false,
+      'autoWidth': false
     })
 
-    $('#searchBox').on('keyup', function(){
-    	bookTable.search(this.value).draw();
-	});
+    $('#searchBox').on('keyup', function() {
+      bookTable.search(this.value).draw();
+    });
 
   })
 </script>

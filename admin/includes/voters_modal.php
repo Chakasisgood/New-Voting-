@@ -41,6 +41,7 @@
   </div>
 </div>
 
+
 <!-- Edit -->
 <div class="modal fade" id="edit">
   <div class="modal-dialog">
@@ -83,6 +84,8 @@
     </div>
   </div>
 </div>
+
+
 
 <!-- Delete -->
 <div class="modal fade" id="delete">

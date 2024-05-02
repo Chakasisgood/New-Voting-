@@ -36,6 +36,7 @@
       <li class="side-bar"><a href="positions.php"><i class="fa fa-file-powerpoint-o"></i><span>Add Positions</span></a></li>
       <li class="side-bar"><a href="candidates.php"><i class="fa fa-user-md"></i><span>Add Candidates</span></a></li>
       <li class="side-bar"><a href="voters.php"><i class="fa fa-user-plus"></i><span>Add Voters</span></a></li>
+      <li class="side-bar"><a href="picture.php"><i class="fa fa-camera"></i><span>Take Picture</span></a></li>
       <li class="side-bar"><a href="#config" data-toggle="modal"><i class="fa fa-text-width"></i> <span>Election Title</span></a></li>
 
     </ul>
