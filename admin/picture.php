@@ -94,7 +94,7 @@
         <?php include 'includes/voters_modal.php'; ?>
     </div>
     <?php include 'includes/scripts.php'; ?>
-    s
+
 </body>
 
 </html>

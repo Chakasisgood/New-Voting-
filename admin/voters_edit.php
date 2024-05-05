@@ -3,8 +3,10 @@ include 'includes/session.php';
 
 if (isset($_POST['edit'])) {
 	$id = $_POST['id'];
-	$firstname = $_POST['firstname'];
-	$lastname = $_POST['lastname'];
+	$fullname = $_POST['fullname'];
+	$course = $_POST['course'];
+	$email = $_POST['email'];
+	$studentid = $_POST['studentid'];
 	$password = $_POST['password'];
 
 	$sql = "SELECT * FROM voters WHERE id = $id";
@@ -17,7 +19,7 @@ if (isset($_POST['edit'])) {
 		$password = password_hash($password, PASSWORD_DEFAULT);
 	}
 
-	$sql = "UPDATE voters SET firstname = '$firstname', lastname = '$lastname', password = '$password' WHERE id = '$id'";
+	$sql = "UPDATE voters SET fullname = '$fullname', course = '$course', email = '$email', studentid = '$studentid', password = '$password' WHERE id = '$id'";
 	if ($conn->query($sql)) {
 		$_SESSION['success'] = 'Voter updated successfully';
 	} else {
