@@ -133,7 +133,7 @@
            $('#edit_email').val(response.email);
            $('#edit_studentid').val(response.studentid);
            $('#edit_password').val(response.password);
-           $('.fullname').html(response.fullname + ' , ' + response.course + ' , ' + response.email + ' , ' + response.studentid);
+           $('.fullname').html(response.fullname + ', ' + response.course + ', ' + response.email + ', ' + response.studentid);
          }
        });
      }
