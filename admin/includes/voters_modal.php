@@ -10,17 +10,31 @@
       <div class="modal-body">
         <form class="form-horizontal" method="POST" action="voters_add.php" enctype="multipart/form-data">
           <div class="form-group">
-            <label for="firstname" class="col-sm-3 control-label">Firstname</label>
+            <label for="fullname" class="col-sm-3 control-label">Fullname</label>
 
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="firstname" name="firstname" required>
+              <input type="text" class="form-control" id="fullname" name="fullname" required>
             </div>
           </div>
           <div class="form-group">
-            <label for="lastname" class="col-sm-3 control-label">Lastname</label>
+            <label for="course" class="col-sm-3 control-label">Course</label>
 
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="lastname" name="lastname" required>
+              <input type="text" class="form-control" id="course" name="course" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email" class="col-sm-3 control-label">Email</label>
+
+            <div class="col-sm-9">
+              <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="studentid" class="col-sm-3 control-label">Student ID</label>
+
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="studentid" name="studentid" required>
             </div>
           </div>
           <div class="form-group">
@@ -54,17 +68,31 @@
         <form class="form-horizontal" method="POST" action="voters_edit.php">
           <input type="hidden" class="id" name="id">
           <div class="form-group">
-            <label for="edit_firstname" class="col-sm-3 control-label">Firstname</label>
+            <label for="edit_fullname" class="col-sm-3 control-label">Fullname</label>
 
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="edit_firstname" name="firstname">
+              <input type="text" class="form-control" id="edit_fullname" name="fullname">
             </div>
           </div>
           <div class="form-group">
-            <label for="edit_lastname" class="col-sm-3 control-label">Lastname</label>
+            <label for="edit_course" class="col-sm-3 control-label">Course</label>
 
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="edit_lastname" name="lastname">
+              <input type="text" class="form-control" id="edit_course" name="course">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit_email" class="col-sm-3 control-label">Email</label>
+
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="edit_email" name="email">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit_studentid" class="col-sm-3 control-label">Student ID</label>
+
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="edit_studentid" name="studentid">
             </div>
           </div>
           <div class="form-group">

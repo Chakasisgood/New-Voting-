@@ -61,9 +61,9 @@
               <div class="box-body">
                 <table id="example1" class="table table-bordered">
                   <thead>
-                    <th>Lastname</th>
+                    <th>Fullname</th>
                     <th>Firstname</th>
-                    <th>Voters ID</th>
+                    <th>Student ID</th>
                     <th>Tools</th>
                   </thead>
                   <tbody>
@@ -74,10 +74,10 @@
                       $image = (!empty($row['photo'])) ? '../images/' . $row['photo'] : '../images/profile.jpg';
                       echo "
                         <tr>
-                          <td>" . $row['lastname'] . "</td>
-                          <td>" . $row['firstname'] . "</td>
+                          <td>" . $row['fullname'] . "</td>
+                          <td>" . $row['course'] . "</td>
                           
-                          <td>" . $row['voters_id'] . "</td>
+                          <td>" . $row['studentid'] . "</td>
                           <td>
                             <button id='button' class='btn btn-success btn-sm edit btn-flat' data-id='" . $row['id'] . "'><i></i> Edit</button>
                             <button id='button' class='btn btn-danger btn-sm delete btn-flat' data-id='" . $row['id'] . "'><i></i> Delete</button>
@@ -133,10 +133,12 @@
         dataType: 'json',
         success: function(response) {
           $('.id').val(response.id);
-          $('#edit_firstname').val(response.firstname);
-          $('#edit_lastname').val(response.lastname);
+          $('#edit_fullname').val(response.fullname);
+          $('#edit_course').val(response.course);
+          $('#edit_email').val(response.email);
+          $('#edit_studentid').val(response.studentid);
           $('#edit_password').val(response.password);
-          $('.fullname').html(response.firstname + ' ' + response.lastname);
+          $('.fullname').html(response.fullname + ' , ' + response.studentid);
         }
       });
     }

@@ -105,6 +105,7 @@ if ($result->num_rows > 0) {
         <i class="bx bx-x" onclick="Hide()"></i>
         <ul>
           <li><a href="admin/index.php">LOG-IN ADMIN</a></li>
+          <li><a href="signup.php">REGISTER</a></li>
           <li id="voteBtn"> <a href="index.php"> LOG-IN VOTER </a>
           </li>
         </ul>

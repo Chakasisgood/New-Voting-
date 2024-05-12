@@ -59,7 +59,7 @@
                   </thead>
                   <tbody>
                     <?php
-                    $sql = "SELECT *, candidates.firstname AS canfirst, candidates.lastname AS canlast, voters.firstname AS votfirst, voters.lastname AS votlast FROM votes LEFT JOIN positions ON positions.id=votes.position_id LEFT JOIN candidates ON candidates.id=votes.candidate_id LEFT JOIN voters ON voters.id=votes.voters_id ORDER BY positions.priority ASC";
+                    $sql = "SELECT *, candidates.firstname AS canlast, voters.fullname AS votlast FROM votes LEFT JOIN positions ON positions.id=votes.position_id LEFT JOIN candidates ON candidates.id=votes.candidate_id LEFT JOIN voters ON voters.id=votes.voters_id ORDER BY positions.priority ASC";
                     $query = $conn->query($sql);
                     while ($row = $query->fetch_assoc()) {
                       echo "
