@@ -152,6 +152,7 @@
           $countdown = $row["countdown"];
         }
         ?>
+        <!-- end of countdown -->
 
         <div class="row">
           <div class="col-xs-12">
@@ -207,7 +208,7 @@
     $carray = array();
     $varray = array();
     while ($crow = $cquery->fetch_assoc()) {
-      array_push($carray, $crow['firstname']);
+      array_push($carray, $crow['fullname']);
       $sql = "SELECT * FROM votes WHERE candidate_id = '" . $crow['id'] . "'";
       $vquery = $conn->query($sql);
       array_push($varray, $vquery->num_rows);
@@ -247,7 +248,7 @@
           labels: <?php echo $carray; ?>,
           datasets: [{
             label: 'Votes',
-            fillColor: 'rgba(60,141,188,0.9)',
+            fillColor: 'rgba(60,141,188,0.5)',
             strokeColor: 'rgba(60,141,188,0.8)',
             pointColor: '#3b8bba',
             pointStrokeColor: 'rgba(60,141,188,1)',

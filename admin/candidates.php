@@ -24,6 +24,10 @@
         font-size: 20px;
         border-style: none;
       }
+
+      .time {
+        margin: 10px;
+      }
     </style>
 
     <!-- Content Wrapper. Contains page content -->
@@ -43,34 +47,35 @@
         <?php
         if (isset($_SESSION['error'])) {
           echo "
-            <div class='alert alert-danger alert-dismissible'>
-              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-              <h4><i class='icon fa fa-warning'></i> Error!</h4>
-              " . $_SESSION['error'] . "
-            </div>
+          <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error!',
+                  text: '" . $_SESSION['error'] . "',
+                  showConfirmButton: true
+              });
+          });
+          </script>
           ";
           unset($_SESSION['error']);
         }
         if (isset($_SESSION['success'])) {
           echo "
-            <div class='alert alert-success alert-dismissible'>
-              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-              <h4><i class='icon fa fa-check'></i> Success!</h4>
-              " . $_SESSION['success'] . "
-            </div>
+          <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Success!',
+                  text: '" . $_SESSION['success'] . "',
+                  showConfirmButton: true
+              });
+          });
+          </script>
           ";
           unset($_SESSION['success']);
         }
         ?>
-
-        <!-- Set Time for Voting -->
-        <form action="candidates.php" method="post">
-          <label id="countdown" for="countdown">Set Time for Voting</label>
-          <input type="datetime-local" id="countdown" name="countdown" required><br>
-          <button id="button" class="settime" type="submit">Set Time</button>
-        </form>
-        <br>
-
 
 
         <!-- Label For the form -->
@@ -79,16 +84,21 @@
           <div class="col-xs-12">
             <div class="box">
               <div class="box-header with-border">
-                <a href="#addnew" data-toggle="modal" id="button" class="btn btn-primary btn-sm btn-flat"><i></i> New</a>
+                <a href="#addnew" data-toggle="modal" id="button" class="btn btn-primary btn-sm btn-flat"><i></i> Add New Candidates</a>
+                <!-- Set Time for Voting -->
+                <br><br>
+                <a href="#addtime" data-toggle="modal" id="button" class="btn btn-primary btn-sm btn-flat"><i></i> Start Voting</a>
               </div>
+
+
               <div class="box-body">
                 <table id="example1" class="table table-bordered">
                   <thead>
                     <th class="hidden"></th>
                     <th>Position</th>
                     <th>Photo</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
+                    <th>Fullname</th>
+                    <th>Age</th>
                     <th>Platform</th>
                     <th>Action</th>
                   </thead>
@@ -120,8 +130,8 @@
                             <img src='" . $image . "' width='30px' height='30px'>
                             <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='" . $row['canid'] . "'><span ></span></a>
                           </td>
-                          <td>" . $row['firstname'] . "</td>
-                          <td>" . $row['lastname'] . "</td>
+                          <td>" . $row['fullname'] . "</td>
+                          <td>" . $row['age'] . "</td>
                           <td><a href='#platform' data-toggle='modal' class='btn btn-info btn-sm btn-flat platform' data-id='" . $row['canid'] . "'><i class='fa fa-search'></i> View</a></td>
                           <td>
                             <button id='button' class='btn btn-success btn-sm edit btn-flat' data-id='" . $row['canid'] . "'><i ></i> Edit</button>
@@ -183,11 +193,11 @@
         dataType: 'json',
         success: function(response) {
           $('.id').val(response.canid);
-          $('#edit_firstname').val(response.firstname);
-          $('#edit_lastname').val(response.lastname);
+          $('#edit_fullname').val(response.fullname);
+          $('#edit_age').val(response.age);
           $('#posselect').val(response.position_id).html(response.description);
           $('#edit_platform').val(response.platform);
-          $('.fullname').html(response.firstname + ' ' + response.lastname);
+          $('.fullname').html(response.description + ' - ' + response.fullname);
           $('#desc').html(response.platform);
         }
       });

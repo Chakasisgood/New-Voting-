@@ -17,7 +17,7 @@ if (isset($_SESSION['admin'])) {
 			<p class="login-box-msg"> </p>
 
 			<form action="login.php" method="POST">
-				<div class="form-group has-feedback" style="width: 400px;">
+				<div class="form-group has-feedback">
 					<input type="text" class="form-control" name="username" placeholder="Admin" required>
 					<span class="glyphicon glyphicon-user form-control-feedback"></span>
 				</div>

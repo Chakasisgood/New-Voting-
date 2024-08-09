@@ -29,17 +29,17 @@
       <div class="modal-body">
         <form class="form-horizontal" method="POST" action="candidates_add.php" enctype="multipart/form-data">
           <div class="form-group">
-            <label for="firstname" class="col-sm-3 control-label">Firstname</label>
+            <label for="fullname" class="col-sm-3 control-label">Fullname</label>
 
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="firstname" name="firstname" required>
+              <input type="text" class="form-control" id="fullname" name="fullname" required>
             </div>
           </div>
           <div class="form-group">
-            <label for="lastname" class="col-sm-3 control-label">Lastname</label>
+            <label for="age" class="col-sm-3 control-label">Age</label>
 
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="lastname" name="lastname" required>
+              <input type="text" class="form-control" id="age" name="age" required>
             </div>
           </div>
           <div class="form-group">
@@ -97,17 +97,17 @@
         <form class="form-horizontal" method="POST" action="candidates_edit.php">
           <input type="hidden" class="id" name="id">
           <div class="form-group">
-            <label for="edit_firstname" class="col-sm-3 control-label">Firstname</label>
+            <label for="edit_fullname" class="col-sm-3 control-label">Fullname</label>
 
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="edit_firstname" name="firstname" required>
+              <input type="text" class="form-control" id="edit_fullname" name="fullname" required>
             </div>
           </div>
           <div class="form-group">
-            <label for="edit_lastname" class="col-sm-3 control-label">Lastname</label>
+            <label for="edit_age" class="col-sm-3 control-label">Age</label>
 
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="edit_lastname" name="lastname" required>
+              <input type="text" class="form-control" id="edit_age" name="age" required>
             </div>
           </div>
           <div class="form-group">
@@ -163,10 +163,29 @@
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-        <button type="submit" class="btn btn-danger btn-flat" name="delete"><i class="fa fa-trash"></i> Delete</button>
+        <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i></i> Close</button>
+        <button type="submit" class="btn btn-danger btn-flat" name="delete"><i></i> Delete</button>
         </form>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Add time for voting -->
+<div class="modal fade" id="addtime">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><b>Add Date & Time For Voting</b></h4>
+        <form class="form-horizontal" action="votingtime.php" method="post">
+          <label id="countdown" for="countdown">Set Time for Voting</label>
+          <input type="datetime-local" id="countdown" name="countdown" required><br>
+          <button class="btn btn-primary btn-sm btn-flat" id="button" type="submit">Start Voting</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 </div>

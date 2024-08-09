@@ -6,21 +6,21 @@ if (isset($_POST['login'])) {
 	$voter = $_POST['voter'];
 	$password = $_POST['password'];
 
-	$sql = "SELECT * FROM users WHERE studentid = '$voter'";
+	$sql = "SELECT * FROM voters WHERE studentid = '$voter'";
 	$query = $conn->query($sql);
 
 	if ($query->num_rows < 1) {
-		$_SESSION['error'] = 'Cannot find voter with the ID';
+		$_SESSION['error'] = 'Cannot find Voter with the ID';
 	} else {
 		$row = $query->fetch_assoc();
 		if (password_verify($password, $row['password'])) {
 			$_SESSION['voter'] = $row['id'];
 		} else {
-			$_SESSION['error'] = 'Incorrect password';
+			$_SESSION['error'] = 'Incorrect Password';
 		}
 	}
 } else {
 	$_SESSION['error'] = 'Input voter credentials first';
 }
 
-header('location: index.php');
+header('location: user.php');

@@ -24,21 +24,31 @@
         <?php
         if (isset($_SESSION['error'])) {
           echo "
-            <div class='alert alert-danger alert-dismissible'>
-              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-              <h4><i class='icon fa fa-warning'></i> Error!</h4>
-              " . $_SESSION['error'] . "
-            </div>
+          <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error!',
+                  text: '" . $_SESSION['error'] . "',
+                  showConfirmButton: true
+              });
+          });
+          </script>
           ";
           unset($_SESSION['error']);
         }
         if (isset($_SESSION['success'])) {
           echo "
-            <div class='alert alert-success alert-dismissible'>
-              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-              <h4><i class='icon fa fa-check'></i> Success!</h4>
-              " . $_SESSION['success'] . "
-            </div>
+          <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Success!',
+                  text: '" . $_SESSION['success'] . "',
+                  showConfirmButton: true
+              });
+          });
+          </script>
           ";
           unset($_SESSION['success']);
         }
@@ -53,21 +63,22 @@
                 <table id="example1" class="table table-bordered">
                   <thead>
                     <th class="hidden"></th>
-                    <th>Position</th>
-                    <th>Candidate</th>
                     <th>Voter</th>
+                    <th>Candidate</th>
+                    <th>Position</th>
                   </thead>
                   <tbody>
                     <?php
-                    $sql = "SELECT *, candidates.firstname AS canlast, voters.fullname AS votlast FROM votes LEFT JOIN positions ON positions.id=votes.position_id LEFT JOIN candidates ON candidates.id=votes.candidate_id LEFT JOIN voters ON voters.id=votes.voters_id ORDER BY positions.priority ASC";
+                    $sql = "SELECT *, voters.fullname AS votlast, candidates.fullname AS canlast FROM votes LEFT JOIN positions ON positions.id=votes.position_id LEFT JOIN candidates ON candidates.id=votes.candidate_id LEFT JOIN voters ON voters.id=votes.voters_id ORDER BY positions.priority ASC";
                     $query = $conn->query($sql);
                     while ($row = $query->fetch_assoc()) {
                       echo "
                         <tr>
                           <td class='hidden'></td>
-                          <td>" . $row['description'] . "</td>
-                          <td>" . $row['canfirst'] . ' ' . $row['canlast'] . "</td>
                           <td>" . $row['votfirst'] . ' ' . $row['votlast'] . "</td>
+                          <td>" . $row['canfirst'] . ' ' . $row['canlast'] . "</td>
+                          <td>" . $row['description'] . "</td>
+                          
                         </tr>
                       ";
                     }

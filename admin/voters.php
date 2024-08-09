@@ -2,7 +2,6 @@
 <?php include 'includes/header.php'; ?>
 <?php include 'includes/conn.php'; ?>
 
-
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
 
@@ -31,21 +30,31 @@
         <?php
         if (isset($_SESSION['error'])) {
           echo "
-            <div class='alert alert-danger alert-dismissible'>
-              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-              <h4><i class='icon fa fa-warning'></i> Error!</h4>
-              " . $_SESSION['error'] . "
-            </div>
+          <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error!',
+                  text: '" . $_SESSION['error'] . "',
+                  showConfirmButton: true
+              });
+          });
+          </script>
           ";
           unset($_SESSION['error']);
         }
         if (isset($_SESSION['success'])) {
           echo "
-            <div class='alert alert-success alert-dismissible'>
-              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-              <h4><i class='icon fa fa-check'></i> Success!</h4>
-              " . $_SESSION['success'] . "
-            </div>
+          <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Success!',
+                  text: '" . $_SESSION['success'] . "',
+                  showConfirmButton: true
+              });
+          });
+          </script>
           ";
           unset($_SESSION['success']);
         }
@@ -54,29 +63,26 @@
           <div class="col-xs-12">
             <div class="box">
               <div class="box-header with-border">
-                <a href="#addnew" data-toggle="modal" id="button" class="btn btn-primary btn-sm btn-flat">
-                  <i></i> New
+                <a href="#addnew" data-toggle="modal" id="button" class="btn btn-primary btn-sm btn-flat"><i></i> Add New Voters
                 </a>
               </div>
               <div class="box-body">
                 <table id="example1" class="table table-bordered">
                   <thead>
                     <th>Fullname</th>
-                    <th>Firstname</th>
+                    <th>Course</th>
                     <th>Student ID</th>
-                    <th>Tools</th>
+                    <th>Action</th>
                   </thead>
                   <tbody>
                     <?php
                     $sql = "SELECT * FROM voters";
                     $query = $conn->query($sql);
                     while ($row = $query->fetch_assoc()) {
-                      $image = (!empty($row['photo'])) ? '../images/' . $row['photo'] : '../images/profile.jpg';
                       echo "
                         <tr>
                           <td>" . $row['fullname'] . "</td>
                           <td>" . $row['course'] . "</td>
-                          
                           <td>" . $row['studentid'] . "</td>
                           <td>
                             <button id='button' class='btn btn-success btn-sm edit btn-flat' data-id='" . $row['id'] . "'><i></i> Edit</button>
@@ -111,12 +117,6 @@
       $(document).on('click', '.delete', function(e) {
         e.preventDefault();
         $('#delete').modal('show');
-        var id = $(this).data('id');
-        getRow(id);
-      });
-
-      $(document).on('click', '.photo', function(e) {
-        e.preventDefault();
         var id = $(this).data('id');
         getRow(id);
       });

@@ -1,16 +1,18 @@
 <?php
 include 'includes/session.php';
 include 'includes/conn.php';
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 function generateRow($conn)
 {
-	$contents = '';
+    $contents = '';
 
-	$sql = "SELECT * FROM positions ORDER BY priority ASC";
-	$query = $conn->query($sql);
-	while ($row = $query->fetch_assoc()) {
-		$id = $row['id'];
-		$contents .= 'x`
+    $sql = "SELECT * FROM positions ORDER BY priority ASC";
+    $query = $conn->query($sql);
+    while ($row = $query->fetch_assoc()) {
+        $id = $row['id'];
+        $contents .= '
         		<tr>
         			<td colspan="2" align="center" style="font-size:15px;"><b>' . $row['description'] . '</b></td>
         		</tr>
@@ -20,24 +22,25 @@ function generateRow($conn)
         		</tr>
         	';
 
-		$sql = "SELECT * FROM candidates WHERE position_id = '$id' ORDER BY lastname ASC";
-		$cquery = $conn->query($sql);
-		while ($crow = $cquery->fetch_assoc()) {
-			$sql = "SELECT * FROM votes WHERE candidate_id = '" . $crow['id'] . "'";
-			$vquery = $conn->query($sql);
-			$votes = $vquery->num_rows;
+        $sql = "SELECT * FROM candidates WHERE position_id = '$id' ORDER BY fullname ASC";
+        $cquery = $conn->query($sql);
+        while ($crow = $cquery->fetch_assoc()) {
+            $sql = "SELECT * FROM votes WHERE candidate_id = '" . $crow['id'] . "'";
+            $vquery = $conn->query($sql);
+            $votes = $vquery->num_rows;
 
-			$contents .= '
+            $contents .= '
       				<tr>
-      					<td>' . $crow['lastname'] . ", " . $crow['firstname'] . '</td>
+      					<td>' . $crow['fullname'] .  '</td>
       					<td>' . $votes . '</td>
       				</tr>
       			';
-		}
-	}
+        }
+    }
 
-	return $contents;
+    return $contents;
 }
+
 
 $parse = parse_ini_file('config.ini', FALSE, INI_SCANNER_RAW);
 $title = $parse['election_title'];
@@ -59,9 +62,9 @@ $pdf->SetFont('helvetica', '', 11);
 $pdf->AddPage();
 $content = '';
 $content .= '
-      	<h2 align="center">' . $title . '</h2>
-      	<h4 align="center">Tally Result</h4>
-      	<table border="1" cellspacing="0" cellpadding="3">  
+        <h2 align="center">' . $title . '</h2>
+        <h4 align="center">Tally Result</h4>
+        <table border="1" cellspacing="0" cellpadding="3">  
       ';
 $content .= generateRow($conn);
 $content .= '</table>';

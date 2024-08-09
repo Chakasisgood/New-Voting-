@@ -14,7 +14,7 @@
           <?php
           if (isset($_SESSION['student'])) {
             echo "
-                <li><a href='index.php'>HOME</a></li>
+                <li><a href='user.php'>HOME</a></li>
                 <li><a href='transaction.php'>TRANSACTION</a></li>
               ";
           }
@@ -28,7 +28,7 @@
           <li class="user user-menu">
             <a href="">
               <img src="<?php echo (!empty($voter['photo'])) ? 'images/' . $voter['photo'] : 'images/profile.jpg' ?>" class="user-image" alt="User Image">
-              <span class="hidden-xs"><?php echo $voter['firstname'] . ' ' . $voter['lastname']; ?></span>
+              <span class="hidden-xs"><?php echo $voter['fullname'] ?></span>
             </a>
           </li>
           <li><a href="logout.php"><i class="fa fa-sign-out"></i> LOGOUT</a></li>

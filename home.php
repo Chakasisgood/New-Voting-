@@ -42,30 +42,37 @@
 						<div class="col-sm-10 col-sm-offset-1">
 							<?php
 							if (isset($_SESSION['error'])) {
-							?>
-								<div class="alert alert-danger alert-dismissible">
-									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-									<ul>
-										<?php
-										foreach ($_SESSION['error'] as $error) {
-											echo "
-					        					<li>" . $error . "</li>
-					        				";
-										}
-										?>
-									</ul>
-								</div>
-							<?php
+								$errors = '';
+								foreach ($_SESSION['error'] as $error) {
+									$errors .= '<li>' . $error . '</li>';
+								}
+								echo "
+								<script>
+								document.addEventListener('DOMContentLoaded', function() {
+									Swal.fire({
+										icon: 'error',
+										title: 'Error!',
+										html: '<ul style=\"text-align: left;\">' + '$errors' + '</ul>',
+										showConfirmButton: true
+									});
+								});
+								</script>
+								";
 								unset($_SESSION['error']);
 							}
 							if (isset($_SESSION['success'])) {
 								echo "
-				            	<div class='alert alert-success alert-dismissible'>
-				              		<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-				              		<h4><i class='icon fa fa-check'></i> Success!</h4>
-				              	" . $_SESSION['success'] . "
-				            	</div>
-				          	";
+								<script>
+								document.addEventListener('DOMContentLoaded', function() {
+									Swal.fire({
+										icon: 'success',
+										title: 'Success!',
+										text: '" . $_SESSION['success'] . "',
+										showConfirmButton: true
+									});
+								});
+								</script>
+								";
 								unset($_SESSION['success']);
 							}
 
@@ -121,7 +128,7 @@
 											$image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
 											$candidate .= '
 												<li>
-													' . $input . '<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '"><i class="fa fa-search"></i> Platform</button><img src="' . $image . '" height="100px" width="100px" class="clist"><span class="cname clist">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
+													' . $input . '<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['fullname'] . '"><i class="fa fa-search"></i> Platform</button><img src="' . $image . '" height="100px" width="100px" class="clist"><span class="cname clist">' . $crow['fullname'] . '</span>
 												</li>
 											';
 										}
@@ -197,7 +204,7 @@
 
 			if (distance < 0) {
 				clearInterval(countdownFunction);
-				document.getElementById("countdown").innerHTML = window.location.href = 'homepage.php';
+				document.getElementById("countdown").innerHTML = window.location.href = 'index.php';
 			}
 		}, 1000);
 

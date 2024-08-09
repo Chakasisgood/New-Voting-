@@ -6,15 +6,14 @@
   font-family: "poppins", sans-serif;
   /* outline: 1px solid blue; */
 }
+/* css for the header */
 
 * .header {
   width: 100%;
-  min-height: 100vh;
+  min-height: 95vh;
   position: relative;
   background-size: cover;
   background-color: #8b0808fe;
-  /* background-image: linear-gradient(rgba(4, 9, 30, 0.7), rgba(4, 9, 30, 0.7)),
-    url("Images/download.png"); */
 }
 * #countdown {
   font-size: 30px;
@@ -54,6 +53,7 @@
   color: white;
 }
 
+/* navigitaion bar  */
 * nav img {
   width: 80px;
   cursor: pointer;
@@ -135,6 +135,7 @@
   display: none;
 }
 
+/* css for the registration  */
 * .full-course {
   background: linear-gradient(
     90deg,
@@ -196,13 +197,14 @@
   font-weight: 400;
   color: #000;
 }
+
+/* css for campuse of the evsu */
 * .campus {
   width: 90%;
   margin-top: 100px;
   margin-left: auto;
   margin-bottom: auto;
   margin-right: auto;
-  height: 120vh;
   text-align: center;
 }
 * .campus h3 {
@@ -239,6 +241,8 @@
   cursor: pointer;
   transform: scale(1.5);
 }
+
+/* css for fceilities in the evsu */
 * .facilites {
   width: 90%;
   height: 90vh;
@@ -506,6 +510,12 @@
 }
 
 @media (max-width: 960px) {
+  * .header tag p {
+    font-size: 8px;
+  }
+  * .header tag a {
+    font-size: 17px;
+  }
   * .text h3 {
     font-size: 20px;
     margin: 2px;
