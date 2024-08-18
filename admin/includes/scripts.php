@@ -73,4 +73,15 @@
       format: 'yyyy-mm-dd'
     })
   });
+
+  // function limitCheckboxes(checkbox, max) {
+  //   console.log('Checking')
+  //   const checkboxes = document.querySelectorAll('input[type="checkbox"][name="' + checkbox.name + '"]');
+  //   const checkedCount = Array.from(checkboxes).filter(chk => chk.checked).length;
+
+  //   if (checkedCount > max) {
+  //     checkbox.checked = false;
+  //     alert('You can only select up to ' + max + ' options.');
+  //   }
+  // }
 </script>

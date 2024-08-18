@@ -1,9 +1,12 @@
 <?php include 'includes/session.php'; ?>
 <?php include 'includes/header.php'; ?>
-<?php include 'includes/conn.php'; ?>
+<?php include 'includes/conn.php';
+$course = $_SESSION['courses']; ?>
+
 
 <body class="hold-transition skin-blue layout-top-nav">
 	<div class="wrapper">
+
 
 		<?php include 'includes/navbar.php'; ?>
 		<style>
@@ -25,8 +28,8 @@
 
 				$countdown = null;
 				if ($result->num_rows > 0) {
-					$row = $result->fetch_assoc();
-					$countdown = $row["countdown"];
+					$time = $result->fetch_assoc();
+					$countdown = $time["countdown"];
 				}
 
 				?>
@@ -101,7 +104,27 @@
 									include 'includes/slugify.php';
 
 									$candidate = '';
-									$sql = "SELECT * FROM positions ORDER BY priority ASC";
+									$course = $_SESSION['courses'];
+
+									$evsu_course = [
+										'BSIT' => 'BSIT',
+										'BTVTED_AFA' => 'BTVTED_AFA',
+										'BSED_MATH' => 'BSED_MATH',
+										'BSED_SCIENCE' => 'BSED_SCIENCE',
+										'BS_ENTREP' => 'BS_ENTREP',
+										'BSFI' => 'BSFI'
+									];
+
+									// Check if the course exists in the map
+									if (array_key_exists($course, $evsu_course)) {
+										$description = $evsu_course[$course];
+										$sql = "SELECT * FROM positions WHERE description = '$description' OR description IN ('President', 'Vice-President') ORDER BY priority ASC";
+									} else {
+										// Default SQL query if the course does not exist in the map
+										$sql = "SELECT * FROM positions WHERE description IN ('President', 'Vice-President') ORDER BY priority ASC";
+									}
+
+									$query = $conn->query($sql);
 									$query = $conn->query($sql);
 									while ($row = $query->fetch_assoc()) {
 										$sql = "SELECT * FROM candidates WHERE position_id='" . $row['id'] . "'";
@@ -135,8 +158,9 @@
 
 										$instruct = ($row['max_vote'] > 1) ? 'You may select up to ' . $row['max_vote'] . ' candidates' : 'Select only one candidate';
 
-										echo '
-											<div class="row">
+										echo
+										'
+											<div class="rowq">
 												<div class="col-xs-12">
 													<div class="box box-solid" id="' . $row['id'] . '">
 														<div class="box-header with-border">
@@ -159,8 +183,11 @@
 											</div>
 										';
 
+
 										$candidate = '';
 									}
+
+									// echo $course = $_SESSION['courses'];
 
 									?>
 									<div class="text-center">

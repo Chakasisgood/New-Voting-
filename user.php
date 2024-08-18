@@ -26,11 +26,9 @@ if (isset($_SESSION['voter'])) {
     </div>
 
     <div class="login-box-body">
-
-
       <form action="login.php" method="POST">
         <div class="form-group has-feedback">
-          <input type=" text" class="form-control" name="voter" placeholder="Student ID" required>
+          <input type="text" class="form-control" name="voter" placeholder="Student ID" required>
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
@@ -59,15 +57,23 @@ if (isset($_SESSION['voter'])) {
       $countdown = $row["countdown"];
     }
 
-
+    // Check if there is an error message in the session
     if (isset($_SESSION['error'])) {
-      echo "
-  				<div class='callout callout-danger text-center mt20'>
-			  		<p>" . $_SESSION['error'] . "</p> 
-			  	</div>
-  			";
+      // Pass the error message to JavaScript
+      echo "<script>
+        window.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '" . addslashes($_SESSION['error']) . "',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>";
+      // Clear the error message from the session
       unset($_SESSION['error']);
     }
+
     ?>
   </div>
 

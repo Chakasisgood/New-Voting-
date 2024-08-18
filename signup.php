@@ -1,46 +1,8 @@
 <?php
-
-include 'includes/conn.php';
 include 'includes/header.php';
+include 'includes/srcipts.php';
 
-if (isset($_POST['add'])) {
-    $fullname = $_POST['fullname'];
-    $course = $_POST['course'];
-    $email = $_POST['email'];
-    $studentid = $_POST['studentid'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-
-    $sql = "INSERT INTO voters (password, fullname, course, email, studentid) VALUES ('$password', '$fullname', '$course', '$email', '$studentid')";
-    if ($conn->query($sql)) {
-        $_SESSION['success'] = 'Voter added successfully';
-    } else {
-        $_SESSION['error'] = $conn->error;
-    }
-} else {
-    $_SESSION['error'] = 'Fill up add form first';
-}
-
-
-if (isset($_GET['studentid'])) {
-    $studentid = $_GET['studentid'];
-    $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE student_id = ?");
-    $stmt->bind_param("s", $studentid);
-    $stmt->execute();
-    $stmt->bind_result($count);
-    $stmt->fetch();
-    $stmt->close();
-
-    $response = array('exists' => $count > 0);
-    echo json_encode($response);
-}
-
-$conn->close();
 ?>
-
-
-
-
 
 
 <style>
@@ -59,26 +21,25 @@ $conn->close();
         </div>
 
         <div class="login-box-body">
-
-
-            <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+            <form action="signup_modal.php" id="registrationForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
+                <!-- Form fields -->
                 <div class="form-group">
                     <label for="fullname" class="col-sm-3 control-label" style="color: #e8d52a; letter-spacing: 1.5px;">Fullname</label>
-
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Fullname" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="course" class="col-sm-3 control-label" style="color: #e8d52a; letter-spacing: 1.5px;">Course</label>
-
                     <div class="col-sm-9">
-                        <input type="text" class="form-control " id="course" name="course" placeholder="Course" required>
+                        <select id="course" name="course" class="form-control" required>
+                            <option value="">Select Course</option>
+                            <!-- Options will be dynamically added here -->
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-sm-3 control-label" style="color: #e8d52a; letter-spacing: 1.5px;">EVSU Email</label>
-
                     <div class="col-sm-9">
                         <input type="email" class="form-control" id="email" name="email" placeholder="EVSU Email" required>
                     </div>
@@ -86,38 +47,67 @@ $conn->close();
                 <div class="form-group">
                     <label for="studentid" class="col-sm-3 control-label" style="color: #e8d52a; letter-spacing: 1.5px;">Student ID</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="studentid" name="studentid" placeholder="Student ID" required>
-                        <span id="studentid-error" class="text-danger" style="display:none;">This Student ID already exists.</span>
+                        <input type="text" class="form-control" id="studentid" name="studentid" placeholder="Student ID" required maxlength="10" minlength="10">
+                        <span id=" studentid-error" class="text-primary" style="display:none;">This Student ID already exists.</span>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="password" class="col-sm-3 control-label" style="color: #e8d52a; letter-spacing: 1.5px;">Password</label>
-
                     <div class="col-sm-9">
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                     </div>
                 </div>
 
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-default btn-flat pull-left"><a href="index.php">Close</a></button>
-            <button type="submit" class="btn btn-primary btn-flat" name="add"><i></i> Save</button>
+                <div class="modal-footer">
+                    <a class="btn btn-default btn-flat pull-left" href="index.php">Close</a>
+                    <button type="submit" class="btn btn-primary btn-flat" name="add">Save</button>
+                </div>
             </form>
         </div>
-
-
     </div>
 
-    <?php include 'includes/scripts.php' ?>
+    <?php include 'includes/scripts.php'; ?>
 
     <script>
+        // Fetch the courses from the server
+        fetch('signup_modal.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    var courseSelect = document.getElementById('course');
+
+                    // Add options to the dropdown
+                    data.courses.forEach(function(course) {
+                        var option = document.createElement('option');
+                        option.value = course;
+                        option.textContent = course;
+                        courseSelect.appendChild(option);
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message || 'Failed to fetch courses.',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred while fetching courses.',
+                    confirmButtonText: 'OK'
+                });
+            });
+
+        // Fetching Student ID
         document.getElementById('studentid').addEventListener('input', function() {
             var studentId = this.value;
             var errorSpan = document.getElementById('studentid-error');
 
             if (studentId.length > 0) { // Only check if there's input
-                fetch('check_studentid.php?studentid=' + studentId)
+                fetch('check_studentid.php?studentid=' + encodeURIComponent(studentId))
                     .then(response => response.json())
                     .then(data => {
                         if (data.exists) {
@@ -131,6 +121,97 @@ $conn->close();
                 errorSpan.style.display = 'none';
             }
         });
-    </script>
 
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            var errorSpan = document.getElementById('studentid-error');
+            if (errorSpan.style.display === 'block') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You cannot register because the Student ID already exists.',
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                // Show loading alert
+                Swal.fire({
+                    title: 'Submitting...',
+                    text: 'Please wait while we process your registration.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                // Collect form data
+                var formData = new FormData(this);
+
+                // Submit the form data via AJAX
+                fetch('signup_modal.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Ensure the loading alert is shown for at least 3 seconds
+                        setTimeout(() => {
+                            Swal.close(); // Close the loading alert
+
+                            if (data.success) {
+                                // Show success alert and redirect
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: 'Your registration has been processed successfully.',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = 'user.php'; // Redirect to user.php
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: data.message || 'An error occurred while processing your registration.',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        }, 3000); // 3000 milliseconds = 3 seconds
+                    })
+                    .catch(error => {
+                        Swal.close(); // Close the loading alert
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred while processing your registration.',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+            }
+        });
+        // Filtering the student ID with only 10 characters
+        document.getElementById('studentid').addEventListener('input', function() {
+            if (this.value.length !== 10) {
+                this.setCustomValidity('Student ID must be exactly 10 characters long.');
+            } else {
+                this.setCustomValidity(''); // Clears the error message
+            }
+        });
+
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const studentId = document.getElementById('studentid').value;
+            if (studentId.length !== 10) {
+                event.preventDefault(); // Prevent form submission
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Student ID',
+                    text: 'Student ID must be exactly 10 characters long.',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    </script>
 </body>

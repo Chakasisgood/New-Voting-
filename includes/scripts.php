@@ -15,20 +15,20 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- Data Table Initialize -->
 <script>
-  $(function () {
+  $(function() {
     $('#example1').DataTable()
-  	var bookTable = $('#booklist').DataTable({
-      'paging'      : true,
+    var bookTable = $('#booklist').DataTable({
+      'paging': true,
       'lengthChange': false,
-      'searching'   : true,
-      'ordering'    : true,
-      'info'        : false,
-      'autoWidth'   : false
+      'searching': true,
+      'ordering': true,
+      'info': false,
+      'autoWidth': false
     })
 
-    $('#searchBox').on('keyup', function(){
-    	bookTable.search(this.value).draw();
-	});
+    $('#searchBox').on('keyup', function() {
+      bookTable.search(this.value).draw();
+    });
 
   })
 </script>

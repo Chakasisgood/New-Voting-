@@ -35,13 +35,22 @@ if (isset($_SESSION['admin'])) {
 		</div>
 		<?php
 		if (isset($_SESSION['error'])) {
-			echo "
-  				<div class='callout callout-danger text-center mt20'>
-			  		<p>" . $_SESSION['error'] . "</p> 
-			  	</div>
-  			";
+			// Pass the error message to JavaScript
+			echo "<script>
+			  window.addEventListener('DOMContentLoaded', function() {
+				  Swal.fire({
+					  icon: 'error',
+					  title: 'Error',
+					  text: '" . addslashes($_SESSION['error']) . "',
+					  confirmButtonText: 'OK'
+				  });
+			  });
+		  </script>";
+			// Clear the error message from the session
 			unset($_SESSION['error']);
 		}
+
+
 		?>
 	</div>
 

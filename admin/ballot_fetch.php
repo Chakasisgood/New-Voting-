@@ -2,6 +2,7 @@
 include 'includes/session.php';
 include 'includes/slugify.php';
 
+
 $sql = "SELECT * FROM positions";
 $pquery = $conn->query($sql);
 
@@ -12,7 +13,17 @@ $sql = "SELECT * FROM positions ORDER BY priority ASC";
 $query = $conn->query($sql);
 $num = 1;
 while ($row = $query->fetch_assoc()) {
-	$input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red ' . slugify($row['description']) . '" name="' . slugify($row['description']) . "[]" . '">' : '<input type="radio" class="flat-red ' . slugify($row['description']) . '" name="' . slugify($row['description']) . '">';
+	// Determine the correct input type based on the value of max_vote
+	if ($row['max_vote'] == 1) {
+		// Render a radio button when max_vote is 1
+		$input = '<input type="radio" class="flat-red ' . slugify($row['description']) . '" name="' . slugify($row['description']) . '">';
+	} elseif ($row['max_vote'] == 2) {
+		// Render a checkbox when max_vote is 2 with a common class or name for JavaScript to target
+		$input = '<input type="checkbox" class="flat-red ' . slugify($row['description']) . '" name="' . slugify($row['description']) . '">';
+	} else {
+		// Render checkboxes for any max_vote greater than 2
+		$input = '<input type="checkbox" class="flat-red ' . slugify($row['description']) . '" name="' . slugify($row['description']) . '[]">';
+	}
 
 	$sql = "SELECT * FROM candidates WHERE position_id='" . $row['id'] . "'";
 	$cquery = $conn->query($sql);
@@ -65,5 +76,6 @@ while ($row = $query->fetch_assoc()) {
 	$num++;
 	$candidate = '';
 }
+
 
 echo json_encode($output);
