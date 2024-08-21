@@ -60,7 +60,7 @@
                 <a href="#reset" data-toggle="modal" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-refresh"></i> Reset</a>
               </div>
               <div class="box-body">
-                <table id="example1" class="table table-bordered">
+                <table id="voterTable" class="table table-bordered">
                   <thead>
                     <th class="hidden"></th>
                     <th>Voter</th>
@@ -69,23 +69,45 @@
                   </thead>
                   <tbody>
                     <?php
-                    $sql = "SELECT *, voters.fullname AS votlast, candidates.fullname AS canlast FROM votes LEFT JOIN positions ON positions.id=votes.position_id LEFT JOIN candidates ON candidates.id=votes.candidate_id LEFT JOIN voters ON voters.id=votes.voters_id ORDER BY positions.priority ASC";
+                    $sql = "SELECT voters.fullname AS votlast, candidates.fullname AS canlast, positions.description AS position_desc 
+                    FROM votes 
+                    LEFT JOIN positions ON positions.id=votes.position_id 
+                    LEFT JOIN candidates ON candidates.id=votes.candidate_id 
+                    LEFT JOIN voters ON voters.id=votes.voters_id 
+                    ORDER BY voters.fullname, positions.priority ASC";
                     $query = $conn->query($sql);
+                    $current_voter = null;
+                    $first = true;
                     while ($row = $query->fetch_assoc()) {
-                      echo "
-                        <tr>
-                          <td class='hidden'></td>
-                          <td>" . $row['votfirst'] . ' ' . $row['votlast'] . "</td>
-                          <td>" . $row['canfirst'] . ' ' . $row['canlast'] . "</td>
-                          <td>" . $row['description'] . "</td>
-                          
+                      if ($row['votlast'] != $current_voter) {
+                        if (!$first) {
+                          echo "</tbody>"; // Close the previous voter's candidate rows
+                        }
+                        $current_voter = $row['votlast'];
+                        $first = false;
+                        echo "
+                        <tr class='voter-row' data-voter='" . $row['votlast'] . "'>
+                            <td class='hidden'></td>
+                            <td colspan='3'><strong>" . $row['votlast'] . "</strong></td>
                         </tr>
-                      ";
+                        <tbody class='candidate-rows' data-voter='" . $row['votlast'] . "' style='display:none;'>
+                    ";
+                      }
+                      echo "
+                    <tr>
+                        <td class='hidden'></td>
+                        <td></td> <!-- Empty cell under voter name -->
+                        <td>" . $row['canlast'] . "</td>
+                        <td>" . $row['position_desc'] . "</td>
+                    </tr>
+                ";
                     }
+                    echo "</tbody>"; // Close the last voter's candidate rows
                     ?>
                   </tbody>
                 </table>
               </div>
+
             </div>
           </div>
         </div>

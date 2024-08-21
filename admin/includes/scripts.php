@@ -28,6 +28,7 @@
 <script src="../bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
+
 <!-- Active Script -->
 <script>
   $(function() {
@@ -73,6 +74,19 @@
       format: 'yyyy-mm-dd'
     })
   });
+
+  $(document).ready(function() {
+    // Handle the click event on voter rows
+    $('.voter-row').click(function() {
+      var voter = $(this).data('voter');
+      var candidateRows = $('.candidate-rows[data-voter="' + voter + '"]');
+
+      // Toggle visibility of the candidate rows
+      candidateRows.slideToggle();
+    });
+  });
+
+
 
   // function limitCheckboxes(checkbox, max) {
   //   console.log('Checking')

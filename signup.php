@@ -47,8 +47,8 @@ include 'includes/srcipts.php';
                 <div class="form-group">
                     <label for="studentid" class="col-sm-3 control-label" style="color: #e8d52a; letter-spacing: 1.5px;">Student ID</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="studentid" name="studentid" placeholder="Student ID" required maxlength="10" minlength="10">
-                        <span id=" studentid-error" class="text-primary" style="display:none;">This Student ID already exists.</span>
+                        <input type="text" class="form-control" id="studentid" name="studentid" placeholder="Student ID" required>
+                        <span id="studentid-error" class="text-primary" style="display:none;">This Student ID already exists.</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -193,25 +193,25 @@ include 'includes/srcipts.php';
             }
         });
         // Filtering the student ID with only 10 characters
-        document.getElementById('studentid').addEventListener('input', function() {
-            if (this.value.length !== 10) {
-                this.setCustomValidity('Student ID must be exactly 10 characters long.');
-            } else {
-                this.setCustomValidity(''); // Clears the error message
-            }
-        });
+        // document.getElementById('studentid').addEventListener('input', function() {
+        //     if (this.value.length !== 10) {
+        //         this.setCustomValidity('Student ID must be exactly 10 characters long.');
+        //     } else {
+        //         this.setCustomValidity(''); // Clears the error message
+        //     }
+        // });
 
-        document.querySelector('form').addEventListener('submit', function(event) {
-            const studentId = document.getElementById('studentid').value;
-            if (studentId.length !== 10) {
-                event.preventDefault(); // Prevent form submission
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Invalid Student ID',
-                    text: 'Student ID must be exactly 10 characters long.',
-                    confirmButtonText: 'OK'
-                });
-            }
-        });
+        // document.querySelector('form').addEventListener('submit', function(event) {
+        //     const studentId = document.getElementById('studentid').value;
+        //     if (studentId.length !== 10) {
+        //         event.preventDefault(); // Prevent form submission
+        //         Swal.fire({
+        //             icon: 'error',
+        //             title: 'Invalid Student ID',
+        //             text: 'Student ID must be exactly 10 characters long.',
+        //             confirmButtonText: 'OK'
+        //         });
+        //     }
+        // });
     </script>
 </body>

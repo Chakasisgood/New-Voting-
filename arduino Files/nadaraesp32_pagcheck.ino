@@ -1,19 +1,3 @@
-/***************************************************
-  This is an example sketch for our optical Fingerprint sensor
-
-  Designed specifically to work with the Adafruit BMP085 Breakout
-  ----> http://www.adafruit.com/products/751
-
-  These displays use TTL Serial to communicate, 2 pins are required to
-  interface
-  Adafruit invests time and resources providing this open source code,
-  please support Adafruit and open-source hardware by purchasing
-  products from Adafruit!
-
-  Written by Limor Fried/Ladyada for Adafruit Industries.
-  BSD license, all text above must be included in any redistribution
- ****************************************************/
-
 
 #include <Adafruit_Fingerprint.h>
 #include <HardwareSerial.h>
@@ -23,7 +7,7 @@
 #define WIFI_SSID "Don't Scan Can Harm A CP"
 #define WIFI_PASSWORD "PLDTwifi44647@"
 
-#define SERVER_URL "http://192.168.1.9/votesystem/vote.php"
+// #define SERVER_URL "http://192.168.1.9/votesystem/config.ini"
 
 WiFiServer server(80);
 
@@ -97,7 +81,7 @@ void loop()                    // run over and over again
 
 {
   getFingerprintID();
-  delay(10000);            //don't ned to run this at full speed.
+  delay(5000);            //don't ned to run this at full speed.
 }
 
 
@@ -122,7 +106,6 @@ uint8_t getFingerprintID() {
   }
 
   // OK success!
-
   p = finger.image2Tz();
   switch (p) {
     case FINGERPRINT_OK:
@@ -149,7 +132,18 @@ uint8_t getFingerprintID() {
   p = finger.fingerSearch();
   if (p == FINGERPRINT_OK) {
     Serial.println("Found a print match!");
-    getURLFromServer();
+    
+    // Send request to Python server to open the URL
+    HTTPClient http;
+    http.begin("http://192.168.1.9:5001//open"); // <Mac IP> with your Mac's IP address
+    int httpResponseCode = http.GET();
+    if (httpResponseCode > 0) {
+      Serial.println("URL opened in browser");
+    } else {
+      Serial.print("Error in sending request: ");
+      Serial.println(httpResponseCode);
+    }
+    http.end();
   } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
     Serial.println("Communication error");
     return p;
@@ -166,47 +160,7 @@ uint8_t getFingerprintID() {
   Serial.print(" with confidence of "); Serial.println(finger.confidence);
 
   return finger.fingerID;
-
- 
 }
 
 
-
-// returns -1 if failed, otherwise returns ID #
-int getFingerprintIDez() {
-  uint8_t p = finger.getImage();
-  if (p != FINGERPRINT_OK)  return -1;
-
-  p = finger.image2Tz();
-  if (p != FINGERPRINT_OK)  return -1;
-
-  p = finger.fingerFastSearch();
-  if (p != FINGERPRINT_OK)  return -1;
-
-  // found a match!
-  Serial.print("Found ID #"); Serial.print(finger.fingerID);
-  Serial.print(" with confidence of "); Serial.println(finger.confidence);
-  return finger.fingerID;
-}
-
-
-void getURLFromServer() {
-  HTTPClient http;
-  http.begin(SERVER_URL);
-
-  int httpResponseCode = http.GET();
-  if (httpResponseCode > 0) {
-    Serial.print("HTTP Response code: ");
-    Serial.println(httpResponseCode);
-    String response = http.getString();
-    Serial.println("URL: " + response);
-
-    
-  } else {
-    Serial.print("Error code: ");
-    Serial.println(httpResponseCode);
-  }
-
-  http.end();
-}
 

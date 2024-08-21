@@ -9,10 +9,10 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-#define WIFI_SSID "Maying"
-#define WIFI_PASSWORD "password"
-  
-#define SERVER_URL "http://192.168.111.81/votesystem/vote.php"
+#define WIFI_SSID "Galaxy 08"
+#define WIFI_PASSWORD "12345678"
+
+// #define SERVER_URL "http://192.168.1.9/votesystem/config.ini"
 
 WiFiServer server(80);
 
@@ -61,8 +61,6 @@ void setup()
     
     server.begin();
 
-    
-
 }
 
 uint8_t readnumber(void) {
@@ -108,7 +106,7 @@ uint8_t getFingerprintEnroll() {
       Serial.println("Imaging error");
       break;
     default:
-      Serial.println("Unknown error");
+      Serial.println("Unknown error1");
       break;
     }
   }
@@ -127,14 +125,14 @@ uint8_t getFingerprintEnroll() {
       Serial.println("Communication error");
       return p;
     case FINGERPRINT_FEATUREFAIL:
-      Serial.println("Could not find fingerprint features");
+      Serial.println("Could not find fingerprint features1");
       
       return p;
     case FINGERPRINT_INVALIDIMAGE:
-      Serial.println("Could not find fingerprint features");
+      Serial.println("Could not find fingerprint features2");
       return p;
     default:
-      Serial.println("Unknown Error");
+      Serial.println("Unknown Error2");
       return p;
   }
   
@@ -163,7 +161,7 @@ uint8_t getFingerprintEnroll() {
       Serial.println("Imaging error");
       break;
     default:
-      Serial.println("Unknown Error");
+      Serial.println("Unknown Error3");
       break;
     }
   }
@@ -182,38 +180,24 @@ uint8_t getFingerprintEnroll() {
       Serial.println("Communication error");
       return p;
     case FINGERPRINT_FEATUREFAIL:
-      Serial.println("Could not find fingerprint features");
+      Serial.println("Could not find fingerprint features3");
       return p;
     case FINGERPRINT_INVALIDIMAGE:
-      Serial.println("Could not find fingerprint features");
+      Serial.println("Could not find fingerprint features4");
       return p;
     default:
-      Serial.println("Unknown Error");
+      Serial.println("Unknown Error4");
       return p;
   }
   
   // OK converted!
   Serial.print("Creating model for #");  Serial.println(id);
   
-  p = finger.createModel();
-  if (p == FINGERPRINT_OK) {
-    Serial.println("Prints matched!");
-  } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
-    Serial.println("Communication error");
-    return p;
-  } else if (p == FINGERPRINT_ENROLLMISMATCH) {
-    Serial.println("Fingerprints did not match");
-    return p;
-  } else {
-    Serial.println("Done");
-    return p;
-  }   
   
   Serial.print("ID "); Serial.println(id);
   p = finger.storeModel(id);
   if (p == FINGERPRINT_OK) {
     Serial.println("Stored!");
-    getURLFromServer();
   } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
     Serial.println("Communication error");
     return p;
@@ -224,27 +208,41 @@ uint8_t getFingerprintEnroll() {
     Serial.println("Error writing to flash");
     return p;
   } else {
-    Serial.println("Unknown error");
+    Serial.println("Done");
+    return p;
+  }   
+
+  p = finger.createModel();
+  if (p == FINGERPRINT_OK) {
+    Serial.println("Prints matched!");
+  } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
+    Serial.println("Communication error");
+    return p;
+  } else if (p == FINGERPRINT_ENROLLMISMATCH) {
+    Serial.println("Fingerprints did not match");
+    return p;
+  } else {
+    Serial.println("");
     return p;
   }   
 }
 
-void getURLFromServer() {
-  HTTPClient http;
-  http.begin(SERVER_URL);
+// void getURLFromServer() {
+//   HTTPClient http;
+//   http.begin(SERVER_URL);
 
-  int httpResponseCode = http.GET();
-  if (httpResponseCode > 0) {
-    Serial.print("HTTP Response code: ");
-    Serial.println(httpResponseCode);
-    String response = http.getString();
-    Serial.println("URL: " + response);
+//   int httpResponseCode = http.GET();
+//   if (httpResponseCode > 0) {
+//     Serial.print("HTTP Response code: ");
+//     Serial.println(httpResponseCode);
+//     String response = http.getString();
+//     Serial.println("URL: " + response);
 
     
-  } else {
-    Serial.print("Error code: ");
-    Serial.println(httpResponseCode);
-  }
+//   } else {
+//     Serial.print("Error code: ");
+//     Serial.println(httpResponseCode);
+//   }
 
-  http.end();
-}
+//   http.end();
+// }

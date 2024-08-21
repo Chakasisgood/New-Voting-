@@ -12,9 +12,9 @@ if (isset($_SESSION['voter'])) {
 <?php include 'includes/conn.php'; ?>
 <style>
   #countdown {
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
-    opacity: 0.7;
+    opacity: 0.8;
   }
 </style>
 

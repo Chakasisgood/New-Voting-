@@ -169,7 +169,7 @@ $course = $_SESSION['courses']; ?>
 														<div class="box-body">
 															<p>' . $instruct . '
 																<span class="pull-right">
-																	<button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="' . slugify($row['description']) . '"><i class="fa fa-refresh"></i> Reset</button>
+																	<button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="' . slugify($row['description']) . '"><i class="fa fa-refresh"></i> Clear</button>
 																</span>
 															</p>
 															<div id="candidate_list">

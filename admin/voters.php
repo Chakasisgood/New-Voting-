@@ -63,8 +63,8 @@
           <div class="col-xs-12">
             <div class="box">
               <div class="box-header with-border">
-                <a href="#addnew" data-toggle="modal" id="button" class="btn btn-primary btn-sm btn-flat"><i></i> Add New Voters
-                </a>
+                <!-- <a href="#addnew" data-toggle="modal" id="button" class="btn btn-primary btn-sm btn-flat"><i></i> Add New Voters
+                </a> -->
               </div>
               <div class="box-body">
                 <table id="example1" class="table table-bordered">
