@@ -11,13 +11,11 @@
 
 #define WIFI_SSID "Don't Scan Can Harm A CP"
 #define WIFI_PASSWORD "PLDTwifi44647@"
+// #define WIFI_PASSWORD "12345678"
+// #define WIFI_SSID "Galaxy 08"
 
-// #define SERVER_URL "http://192.168.1.9/votesystem/config.ini"
 
 WiFiServer server(80);
-
-
-//SoftwareSerial mySerial(2, 3); // TX/RX
 
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&Serial2);
 
@@ -137,7 +135,7 @@ uint8_t getFingerprintEnroll() {
   }
   
   Serial.println("Remove finger");
-  delay(2000);
+  delay(1000);
   p = 0;
   while (p != FINGERPRINT_NOFINGER) {
     p = finger.getImage();
@@ -198,6 +196,18 @@ uint8_t getFingerprintEnroll() {
   p = finger.storeModel(id);
   if (p == FINGERPRINT_OK) {
     Serial.println("Stored!");
+
+    // send a request to the api
+    HTTPClient http;
+    http.begin("http://192.168.1.9:5002//open"); // <Mac IP> with your Mac's IP address
+    int httpResponseCode = http.GET();
+    if (httpResponseCode > 0) {
+      Serial.println("URL opened in browser");
+    } else {
+      Serial.print("Error in sending request: ");
+      Serial.println(httpResponseCode);
+    }
+    http.end();
   } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
     Serial.println("Communication error");
     return p;
@@ -227,22 +237,3 @@ uint8_t getFingerprintEnroll() {
   }   
 }
 
-// void getURLFromServer() {
-//   HTTPClient http;
-//   http.begin(SERVER_URL);
-
-//   int httpResponseCode = http.GET();
-//   if (httpResponseCode > 0) {
-//     Serial.print("HTTP Response code: ");
-//     Serial.println(httpResponseCode);
-//     String response = http.getString();
-//     Serial.println("URL: " + response);
-
-    
-//   } else {
-//     Serial.print("Error code: ");
-//     Serial.println(httpResponseCode);
-//   }
-
-//   http.end();
-// }
