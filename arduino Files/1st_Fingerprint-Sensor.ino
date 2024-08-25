@@ -9,8 +9,8 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-#define WIFI_SSID "Galaxy 08"
-#define WIFI_PASSWORD "12345678"
+#define WIFI_SSID "Don't Scan Can Harm A CP"
+#define WIFI_PASSWORD "PLDTwifi44647@"
 
 // #define SERVER_URL "http://192.168.1.9/votesystem/config.ini"
 

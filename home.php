@@ -93,7 +93,7 @@ $course = $_SESSION['courses']; ?>
 							?>
 								<div class="text-center">
 									<h3>You have already voted for this election.</h3>
-									<a href="#view" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
+									<a href="printcast.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Print</a>
 								</div>
 							<?php
 							} else {
@@ -207,14 +207,45 @@ $course = $_SESSION['courses']; ?>
 
 			</div>
 		</div>
+		<?php
+		// if (isset($_POST['vote'])) {
+		// 	echo "The submit button is working!<br>";
+
+		// 	// Use var_dump to see the contents of $_POST
+		// 	echo "<pre>";
+		// 	var_dump($_POST);
+		// 	echo "</pre>";
+		// }
+		// 
+		?>
+
+		<!-- Preview Modal -->
+		<!-- <div class="modal fade" id="preview_modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Vote Preview</h4>
+					</div>
+					<div class="modal-body">
+						<div id="preview_body"></div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+						<button type="submit" class="btn btn-primary btn-flat" name="vote"><i class="fa fa-check-square-o"></i> Submit</button>
+					</div>
+				</div>
+			</div>
+		</div> -->
 
 		<?php include 'includes/footer.php'; ?>
 		<?php include 'includes/ballot_modal.php'; ?>
 	</div>
 
+
 	<?php include 'includes/scripts.php'; ?>
 	<script>
-		// Set the countdown timer
 		var countdownEnd = new Date("<?php echo $countdown; ?>").getTime();
 
 		var countdownFunction = setInterval(function() {
@@ -257,36 +288,55 @@ $course = $_SESSION['courses']; ?>
 				$('#plat_view').html(platform);
 			});
 
+			// when preview is clicked
+
 			$('#preview').click(function(e) {
 				e.preventDefault();
 				var form = $('#ballotForm').serialize();
+
 				if (form == '') {
-					$('.message').html('You must vote atleast one candidate');
-					$('#alert').show();
-				} else {
-					$.ajax({
-						type: 'POST',
-						url: 'preview.php',
-						data: form,
-						dataType: 'json',
-						success: function(response) {
-							if (response.error) {
-								var errmsg = '';
-								var messages = response.message;
-								for (i in messages) {
-									errmsg += messages[i];
-								}
-								$('.message').html(errmsg);
-								$('#alert').show();
-							} else {
-								$('#preview_modal').modal('show');
-								$('#preview_body').html(response.list);
-							}
+					Swal.fire({
+						icon: 'warning',
+						title: 'Alert',
+						text: 'You have not selected any candidates. Do you want to proceed?',
+						showCancelButton: true,
+						confirmButtonText: 'Yes, proceed',
+						cancelButtonText: 'No, go back',
+					}).then((result) => {
+						if (result.isConfirmed) {
+							// Proceed with AJAX request
+							sendPreviewRequest(form);
 						}
 					});
+				} else {
+					// Proceed directly with AJAX request if form is not empty
+					sendPreviewRequest(form);
 				}
-
 			});
+
+			function sendPreviewRequest(form) {
+				$.ajax({
+					type: 'POST',
+					url: 'preview.php',
+					data: form,
+					dataType: 'json',
+					success: function(response) {
+						if (response.error) {
+							var errmsg = '';
+							var messages = response.message;
+							for (i in messages) {
+								errmsg += messages[i];
+							}
+							$('.message').html(errmsg);
+							$('#alert').show();
+						} else {
+							$('#preview_modal').modal('show');
+							$('#preview_body').html(response.list);
+						}
+					}
+				});
+			}
+
 
 		});
 	</script>
