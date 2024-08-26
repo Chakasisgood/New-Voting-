@@ -10,11 +10,25 @@ if (isset($_SESSION['voter'])) {
 ?>
 <?php include 'includes/header.php'; ?>
 <?php include 'includes/conn.php'; ?>
+
 <style>
   #countdown {
     font-size: 20px;
     font-weight: bold;
     opacity: 0.8;
+  }
+
+  .form-group {
+    position: relative;
+  }
+
+  #togglePassword {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
   }
 </style>
 
@@ -32,8 +46,8 @@ if (isset($_SESSION['voter'])) {
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-          <input type="password" class="form-control" name="password" placeholder="Password" required>
-          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+          <span class="glyphicon glyphicon-eye-open" id="togglePassword"></span>
         </div>
         <div class="row">
           <div class="col-xs-4">
@@ -79,6 +93,7 @@ if (isset($_SESSION['voter'])) {
 
   <?php include 'includes/scripts.php' ?>
 </body>
+
 <script>
   // Set the countdown timer
   var countdownEnd = new Date("<?php echo $countdown; ?>").getTime();
@@ -101,4 +116,20 @@ if (isset($_SESSION['voter'])) {
       document.getElementById("voteBtn").disabled = true;
     }
   }, 1000);
+
+  // Show password
+  document.getElementById('togglePassword').addEventListener('click', function() {
+    var passwordField = document.getElementById('password');
+    var toggleIcon = document.getElementById('togglePassword');
+
+    if (passwordField.type === 'password') {
+      passwordField.type = 'text';
+      toggleIcon.classList.remove('glyphicon-eye-open');
+      toggleIcon.classList.add('glyphicon-eye-close');
+    } else {
+      passwordField.type = 'password';
+      toggleIcon.classList.remove('glyphicon-eye-close');
+      toggleIcon.classList.add('glyphicon-eye-open');
+    }
+  });
 </script>

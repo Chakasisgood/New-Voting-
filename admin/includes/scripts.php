@@ -86,7 +86,21 @@
     });
   });
 
+  // Show password
+  document.getElementById('togglePassword').addEventListener('click', function() {
+    var passwordField = document.getElementById('password');
+    var toggleIcon = document.getElementById('togglePassword');
 
+    if (passwordField.type === 'password') {
+      passwordField.type = 'text';
+      toggleIcon.classList.remove('glyphicon-eye-open');
+      toggleIcon.classList.add('glyphicon-eye-close');
+    } else {
+      passwordField.type = 'password';
+      toggleIcon.classList.remove('glyphicon-eye-close');
+      toggleIcon.classList.add('glyphicon-eye-open');
+    }
+  });
 
   // function limitCheckboxes(checkbox, max) {
   //   console.log('Checking')
