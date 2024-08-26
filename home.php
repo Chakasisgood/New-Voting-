@@ -93,7 +93,7 @@ $course = $_SESSION['courses']; ?>
 							?>
 								<div class="text-center">
 									<h3>You have already voted for this election.</h3>
-									<a href="printcast.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Print</a>
+									<a href="printcast.php" class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</a>
 								</div>
 							<?php
 							} else {
@@ -191,8 +191,28 @@ $course = $_SESSION['courses']; ?>
 
 									?>
 									<div class="text-center">
+										<!-- preview click -->
 										<button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button>
-										<button type="submit" class="btn btn-primary btn-flat" name="vote"><i class="fa fa-check-square-o"></i> Submit</button>
+
+										<!-- Preview Modal ma pop-up-->
+										<div class="modal fade" id="preview_modal">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span></button>
+														<h4 class="modal-title">Vote Preview</h4>
+													</div>
+													<div class="modal-body">
+														<div id="preview_body"></div>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+														<button type="submit" class="btn btn-primary btn-flat" name="vote"><i class="fa fa-check-square-o"></i> Submit</button>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</form>
 								<!-- End Voting Ballot -->
@@ -207,37 +227,6 @@ $course = $_SESSION['courses']; ?>
 
 			</div>
 		</div>
-		<?php
-		// if (isset($_POST['vote'])) {
-		// 	echo "The submit button is working!<br>";
-
-		// 	// Use var_dump to see the contents of $_POST
-		// 	echo "<pre>";
-		// 	var_dump($_POST);
-		// 	echo "</pre>";
-		// }
-		// 
-		?>
-
-		<!-- Preview Modal -->
-		<!-- <div class="modal fade" id="preview_modal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title">Vote Preview</h4>
-					</div>
-					<div class="modal-body">
-						<div id="preview_body"></div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-						<button type="submit" class="btn btn-primary btn-flat" name="vote"><i class="fa fa-check-square-o"></i> Submit</button>
-					</div>
-				</div>
-			</div>
-		</div> -->
 
 		<?php include 'includes/footer.php'; ?>
 		<?php include 'includes/ballot_modal.php'; ?>
@@ -298,7 +287,7 @@ $course = $_SESSION['courses']; ?>
 					Swal.fire({
 						icon: 'warning',
 						title: 'Alert',
-						text: 'You have not selected any candidates. Do you want to proceed?',
+						text: 'You have not selected any candidates yet. Do you want to proceed?',
 						showCancelButton: true,
 						confirmButtonText: 'Yes, proceed',
 						cancelButtonText: 'No, go back',

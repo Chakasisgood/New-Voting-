@@ -31,4 +31,21 @@
     });
 
   })
+  document.getElementById('logoutButton').addEventListener('click', function() {
+    Swal.fire({
+      title: 'Are you sure you want to logout?',
+      text: "You will need to log in again to continue.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, logout',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Redirect to the logout PHP script if confirmed
+        window.location.href = 'logout.php';
+      }
+    });
+  });
 </script>

@@ -39,8 +39,8 @@ function generateRow($conn, $voterID)
         $content .= "
             <tr>
                 <td></td> <!-- Empty cell under voter name -->
-                <td>" . $row['canlast'] . "</td>
-                <td>" . $row['position_desc'] . "</td>
+                <td style='font-size: 5px;'>" . $row['canlast'] . "</td>
+                <td style='font-size: 5px;'>" . $row['position_desc'] . "</td>
             </tr>
         ";
     }
@@ -60,12 +60,7 @@ class MYPDF extends TCPDF
     // Page header
     public function Header()
     {
-        if ($this->getPage() == 1) {
-            // Set font
-            $this->SetFont('helvetica', 'I', 6); // Smaller font size for header
-            // Title
-            $this->Cell(0, 10, date('Y-m-d H:i:s'), 0, 1, 'L');
-        }
+        // No header on this page, add nala manually didto ha content content.
     }
 }
 
@@ -81,7 +76,7 @@ $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 $pdf->SetMargins(PDF_MARGIN_LEFT, '5', PDF_MARGIN_RIGHT); // Reduced margins for thermal printing
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetAutoPageBreak(TRUE, 10);
-$pdf->SetFont('helvetica', '', 7); // Smaller font size for main content
+$pdf->SetFont('helvetica', '', 6); // Smaller font size for main content
 $pdf->AddPage();
 
 // Get the voter ID from the session
@@ -91,16 +86,18 @@ if (!$voterID) {
     die("No voter ID found in session.");
 }
 
+// Add time and Cast Results header
 $content = '';
 $content .= '
-    <h2 align="center" style="font-size: 8px;">Cast Results</h2> <!-- Smaller font size for the title -->
-    <h4 align="center" style="font-size: 5px;">Casted Votes</h4> <!-- Smaller font size for the subtitle -->
-    <table border="1" cellspacing="0" cellpadding="2">  
+    <div align="center" style="font-size: 6px;">' . date('Y-m-d H:i:s') . '</div> <!-- Time at the top -->
+    <h2 align="center" style="font-size: 8px;">Cast Results</h2> <!-- Title below the time -->
+    <h4 align="center" style="font-size: 6px;">Casted Votes</h4> <!-- Smaller font size for the subtitle -->
+    <table border="1" cellspacing="0" cellpadding="1">  
         <thead>
             <tr>
                 <th width="33.3%" style="font-size: 5px;">Voter</th> <!-- Smaller font size for table headers -->
-                <th width="33.3%" style="font-size: 4px;">Candidate</th>
-                <th width="33.3%" style="font-size: 4px;">Position</th>
+                <th width="33.3%" style="font-size: 5px;">Candidate</th>
+                <th width="33.3%" style="font-size: 5px;">Position</th>
             </tr>
         </thead>
         <tbody>
@@ -112,18 +109,19 @@ $content .= '</tbody></table>';
 // Output the content into the PDF
 $pdf->writeHTML($content, true, false, true, false, '');
 
-// Add the signature line and text at the bottom of the page
-$pdf->SetY(-40); // Position the line 40mm from the bottom of the page
+// Add the signature line and text at the bottom of the table
+$pdf->SetY($pdf->GetY() + 5); // Move 5mm down from the end of the table
 $pdf->SetFont('helvetica', '', 6); // Smaller font size for signature line and text
 
 // Draw the line
 $pdf->Line(10, $pdf->GetY(), 48, $pdf->GetY()); // Adjusted for 58mm width
 
 // Add the text below the line
-$pdf->SetY($pdf->GetY() + 5); // Move 5mm down from the line
-$pdf->Cell(0, 10, 'Name & Signature of the Accesstor', 0, 1, 'L');
+$pdf->SetY($pdf->GetY() + 2); // Move 2mm down from the line
+$pdf->Cell(0, 5, 'Name & Signature of the Assesstor', 0, 1, 'L');
 
 $pdf->Output('election_result.pdf', 'I');
+
 
 
 // Normal Bond Paper Size 

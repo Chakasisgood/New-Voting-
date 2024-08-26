@@ -214,7 +214,6 @@ a:focus {
   .main-header .navbar-custom-menu a,
   .main-header .navbar-right a {
     color: inherit;
-    background: transparent;
   }
 }
 @media (max-width: 767px) {
@@ -3569,7 +3568,7 @@ table.text-center th {
 .login-box,
 .register-box {
   width: 450px;
-  margin: 15% auto;
+  margin: 8% auto;
 }
 @media (max-width: 768px) {
   .login-box,
