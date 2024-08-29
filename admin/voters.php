@@ -63,8 +63,24 @@
           <div class="col-xs-12">
             <div class="box">
               <div class="box-header with-border">
-                <!-- <a href="#addnew" data-toggle="modal" id="button" class="btn btn-primary btn-sm btn-flat"><i></i> Add New Voters
-                </a> -->
+                <!-- Course Filter Dropdown -->
+                <div id="courseFilters" class="btn-group">
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Select Course <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <?php
+                    // Retrieve distinct courses from the 'voters' table
+                    $sql = "SELECT DISTINCT course FROM voters ORDER BY course ASC";
+                    $courseQuery = $conn->query($sql);
+                    while ($courseRow = $courseQuery->fetch_assoc()) {
+                      echo "<li><a href='#' class='course-button' data-course='" . $courseRow['course'] . "'>" . $courseRow['course'] . "</a></li>";
+                    }
+                    ?>
+                    <li role="separator" class="divider"></li>
+                    <li><a href='#' class='course-button' data-course='all'>Show All</a></li>
+                  </ul>
+                </div>
               </div>
               <div class="box-body">
                 <table id="example1" class="table table-bordered">
@@ -74,22 +90,22 @@
                     <th>Student ID</th>
                     <th>Action</th>
                   </thead>
-                  <tbody>
+                  <tbody id="voterTableBody">
                     <?php
                     $sql = "SELECT * FROM voters";
                     $query = $conn->query($sql);
                     while ($row = $query->fetch_assoc()) {
                       echo "
-                        <tr>
-                          <td>" . $row['fullname'] . "</td>
-                          <td>" . $row['course'] . "</td>
-                          <td>" . $row['studentid'] . "</td>
-                          <td>
-                            <button id='button' class='btn btn-success btn-sm edit btn-flat' data-id='" . $row['id'] . "'><i></i> Edit</button>
-                            <button id='button' class='btn btn-danger btn-sm delete btn-flat' data-id='" . $row['id'] . "'><i></i> Delete</button>
-                          </td>
-                        </tr>
-                      ";
+                                <tr class='student-row' data-course='" . $row['course'] . "'>
+                                    <td>" . $row['fullname'] . "</td>
+                                    <td>" . $row['course'] . "</td>
+                                    <td>" . $row['studentid'] . "</td>
+                                    <td>
+                                        <button class='btn btn-success btn-sm edit btn-flat' data-id='" . $row['id'] . "'><i></i> Edit</button>
+                                        <button class='btn btn-danger btn-sm delete btn-flat' data-id='" . $row['id'] . "'><i></i> Delete</button>
+                                    </td>
+                                </tr>
+                            ";
                     }
                     ?>
                   </tbody>
@@ -98,6 +114,7 @@
             </div>
           </div>
         </div>
+
       </section>
     </div>
 
@@ -142,6 +159,34 @@
         }
       });
     }
+
+    // Filtering Course
+    document.addEventListener('DOMContentLoaded', function() {
+      // Event listener for course button clicks
+      document.querySelectorAll('.course-button').forEach(button => {
+        button.addEventListener('click', function(event) {
+          event.preventDefault();
+          const selectedCourse = this.getAttribute('data-course');
+
+          // Show all rows if "Show All" is selected
+          if (selectedCourse === 'all') {
+            document.querySelectorAll('.student-row').forEach(row => {
+              row.style.display = '';
+            });
+          } else {
+            // Hide all rows first
+            document.querySelectorAll('.student-row').forEach(row => {
+              row.style.display = 'none';
+            });
+
+            // Show only the rows with the selected course
+            document.querySelectorAll('.student-row[data-course="' + selectedCourse + '"]').forEach(row => {
+              row.style.display = '';
+            });
+          }
+        });
+      });
+    });
   </script>
 </body>
 
