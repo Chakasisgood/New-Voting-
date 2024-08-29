@@ -81,6 +81,7 @@ $course = $_SESSION['courses']; ?>
 
 							?>
 
+							<!-- Erorr message -->
 							<div class="alert alert-danger alert-dismissible" id="alert" style="display:none;">
 								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 								<span class="message"></span>
@@ -194,22 +195,23 @@ $course = $_SESSION['courses']; ?>
 										<!-- preview click -->
 										<button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button>
 
-										<!-- Preview Modal ma pop-up-->
-										<div class="modal fade" id="preview_modal">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span></button>
-														<h4 class="modal-title">Vote Preview</h4>
-													</div>
-													<div class="modal-body">
-														<div id="preview_body"></div>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-														<button type="submit" class="btn btn-primary btn-flat" name="vote"><i class="fa fa-check-square-o"></i> Submit</button>
-													</div>
+
+									</div>
+									<!-- Preview Modal ma pop-up-->
+									<div class="modal fade" id="preview_modal">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span></button>
+													<h4 class="modal-title">Vote Preview</h4>
+												</div>
+												<div class="modal-body">
+													<div id="preview_body"></div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+													<button type="submit" class="btn btn-primary btn-flat" name="vote"><i class="fa fa-check-square-o"></i> Submit</button>
 												</div>
 											</div>
 										</div>
@@ -235,6 +237,7 @@ $course = $_SESSION['courses']; ?>
 
 	<?php include 'includes/scripts.php'; ?>
 	<script>
+		// Countdown timer
 		var countdownEnd = new Date("<?php echo $countdown; ?>").getTime();
 
 		var countdownFunction = setInterval(function() {
@@ -254,6 +257,22 @@ $course = $_SESSION['courses']; ?>
 				document.getElementById("countdown").innerHTML = window.location.href = 'index.php';
 			}
 		}, 1000);
+
+
+		//if there are 3 selected candidates
+		// function showAlert(message) {
+		// 	Swal.fire({
+		// 		icon: 'error',
+		// 		title: 'Oops...',
+		// 		text: message,
+		// 		confirmButtonText: 'OK'
+		// 	});
+		// }
+
+		// function handleLoginError(errorMessage) {
+		// 	showAlert(errorMessage);
+		// }
+
 
 		// set if the check box was clicked
 		$(function() {
@@ -276,6 +295,7 @@ $course = $_SESSION['courses']; ?>
 				$('.candidate').html(fullname);
 				$('#plat_view').html(platform);
 			});
+
 
 			// when preview is clicked
 
