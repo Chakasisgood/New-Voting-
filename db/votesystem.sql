@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 05, 2024 at 05:11 AM
+-- Generation Time: Sep 01, 2024 at 08:22 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -64,10 +64,33 @@ CREATE TABLE `candidates` (
 --
 
 INSERT INTO `candidates` (`id`, `position_id`, `fullname`, `age`, `photo`, `platform`) VALUES
-(63, 25, 'Matthew Solar', '20', '', 'Hello'),
-(64, 25, 'Jerson Aballa', '20', '', 'John'),
-(65, 26, 'John Doe', '20', '', 'We will apply this world'),
-(66, 26, 'Hello Catagumpay', '20', '', 'The quick brown fox jump over the lazy dog ');
+(72, 34, 'Vincent Obejera', '20', '', 'I am good'),
+(73, 35, 'Earl John Aborca', '21', '', 'I WILL SERVE AS ONE'),
+(74, 34, 'Arian Nartea', '21', '', 'WE WILL SERVE AS ONE'),
+(75, 35, 'John Doe ', '21', '', 'I will be good'),
+(76, 36, 'Jessa Marie Mendoza', '21', 'logo-voting.jpeg', 'WE WILL SERVE AS ONE'),
+(78, 36, 'Mon Greg Apilado', '21', '', 'tesafdgshrs'),
+(80, 36, 'Elasamie Canamaso', '21', '', 'WE WILL SERVE'),
+(81, 42, 'Abegail Parena', '21', '', 'WE WILL'),
+(82, 42, 'Keim Afable', '21', '', 'advev e'),
+(83, 42, 'Dennis Biscante', '21', '', 'dqcwve'),
+(84, 42, 'Rhealyn Dadacay ', '21', '', 'CAWQCVWQ'),
+(85, 43, 'Janice Cuizon ', '21', '', 'cwvewv'),
+(86, 43, 'Rhealyn Acuin', '21', '', 'fqwqfvew'),
+(87, 43, 'Reymark Cabanacan', '21', '', 'cwfewsc'),
+(88, 43, 'Sherwin Juli', '21', '', 'mnjfjfhg'),
+(89, 63, 'Erica Gayo', '21', '', 'svdsveewf'),
+(90, 63, 'Rodel Oriol', '21', '', 'vwevwegvd'),
+(91, 63, 'Rollan Erron Arguelles', '21', '', 'vswebvws'),
+(92, 63, 'Matthew Solar', '21', '', 'sdvwevwew'),
+(93, 62, 'Dannielle Marie Prefetana', '21', '', 'cfwefew'),
+(94, 62, 'Fredirick Bravo', '21', '', 'cacsawqca'),
+(95, 62, 'Wilson Binban ', '21', '', 'dfacsvas'),
+(96, 62, 'Rejay Diegor', '21', '', 'vsvdwsrbws'),
+(97, 45, 'Jerome Avila', '21', '', 'vsdewve'),
+(98, 45, 'Shanel Rizzie Canas', '21', '', 'cvsvdvd'),
+(99, 45, 'Louela Mae Acerden', '21', '', 'svdsdweve'),
+(100, 45, 'John Mark Arce', '21', '', 'vsdsvsvwsd');
 
 -- --------------------------------------------------------
 
@@ -96,15 +119,7 @@ CREATE TABLE `countdown` (
 --
 
 INSERT INTO `countdown` (`id`, `countdown`) VALUES
-(75, '2024-05-13 04:30:00.000000'),
-(76, '2024-05-13 15:43:00.000000'),
-(77, '2024-05-13 15:45:00.000000'),
-(78, '2024-05-13 15:49:00.000000'),
-(79, '2024-05-13 15:52:00.000000'),
-(80, '2024-05-14 02:52:00.000000'),
-(81, '2024-05-16 14:05:00.000000'),
-(82, '2024-05-21 15:59:00.000000'),
-(83, '2024-05-23 09:17:00.000000');
+(123, '2024-08-29 15:05:00.000000');
 
 -- --------------------------------------------------------
 
@@ -124,8 +139,14 @@ CREATE TABLE `positions` (
 --
 
 INSERT INTO `positions` (`id`, `description`, `max_vote`, `priority`) VALUES
-(25, 'President', 1, 1),
-(26, 'Vice President', 1, 2);
+(34, 'PRESIDENT', 1, 1),
+(35, 'VICE-PRESIDENT', 1, 2),
+(36, 'BTVTED_AFA', 2, 3),
+(42, 'BSED_MATH ', 2, 4),
+(43, 'BSED_SCIENCE', 2, 5),
+(45, 'BS_ENTREP ', 2, 6),
+(62, 'BSFI ', 2, 7),
+(63, 'BSIT', 2, 8);
 
 -- --------------------------------------------------------
 
@@ -156,7 +177,7 @@ CREATE TABLE `voters` (
   `id` int(11) NOT NULL,
   `password` varchar(60) NOT NULL,
   `fullname` varchar(100) NOT NULL,
-  `course` varchar(30) NOT NULL,
+  `course` enum('BTVTED_AFA','BSED_MATH','BSED_SCIENCE','BSIT','BS_ENTREP','BSFI') NOT NULL,
   `email` varchar(100) NOT NULL,
   `studentid` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -166,13 +187,16 @@ CREATE TABLE `voters` (
 --
 
 INSERT INTO `voters` (`id`, `password`, `fullname`, `course`, `email`, `studentid`) VALUES
-(51, '$2y$10$eLc8VoLsw1la6tTZ3YzZ4eXTKwEkf7x.M8ZBGRKv3T2/aC8aqhNiK', 'Mattthew Solar', 'BSIT', 'matthewsolar@gmail.com', '2021-25669'),
-(52, '$2y$10$qGolI2ICC3kKmJO540ZZIuzt4eG3wvKhdeBYjwbAwkRmD/63j4TX6', 'Rodel Oriol', 'BSIT', 'rodel.oriol@evsu.edu.ph', '2021-25515'),
-(53, '$2y$10$zW0mc18BswE/YKd5eh0dNe1Qu5WVqv.uyj42S0zjmpXEysEhTJb26', 'Ronel Colibao', 'BSIT', 'ronel.colibao@evsu.edu.ph', '2021-25152'),
-(54, '$2y$10$vk5U6SUsn7ez8fTy0YuD6.wLSStufyNEpYmZwaQCuVq3xt1kaVgta', 'Kyle Norwin J. Quilaquil', 'BSIT', 'kylenorwin.quilaquil@evsu.edu.ph', '2021-25114'),
-(55, '$2y$10$NvdB5HmK2jzegeGGhefEluBgLTgy5LL.GE4IS2005e.pPeMYnbosS', 'Rosemarie Rosal', 'BSIT', 'rosemarie.rosal@evsu.edu.ph', '2021-25248'),
-(56, '$2y$10$cg3y.RKQXPFIw.Zi2Bog7OkAHTLblsNn6AZIsg/hgAkD4mtOSxb56', 'Radgie Lopez', 'BSIT', 'radgielopez23@evsu.edu.ph', '2021-25382'),
-(57, '$2y$10$N/o059jNrkoynQEfaxbaf.MCCuyTEwzJGsipKM5AiAUE2z6K483WO', 'Vincent LoveH', 'BSIT', 'matthewsolar09@gmail.com', '2021-25413');
+(87, '$2y$10$orAfzYh7eq7RjrX0d1AYLehE5cycZvYgsl.jkt//W.9ocJms9ujIq', 'Vincent Obejera', 'BSIT', 'matthewsolar@evsu.edu.ph', '2021-25669'),
+(89, '$2y$10$4f0bOUzAuheZVWSnVEePeuPrYYmrInebtkMS0zXnJSxm13vLyICy.', 'Rosemarie Rosal', 'BTVTED_AFA', 'matthewsolar@evsu.edu.ph', '2021-25248'),
+(90, '$2y$10$eTe7Pu539weMLj8lYYXDt.N5eTp9oxl2/LF.wnenkFbLk5BzUlHKm', 'John', 'BSED_MATH', 'matthewsolar@evsu.edu.ph', '2021-255555'),
+(91, '$2y$10$nNx3ZFQAplcJm.PiDBDVj.Anf.r1Mg5Z0vGGP8Bo.6WZuauOb1sQ6', 'Adelfa Astiga ', 'BSED_MATH', 'matthewsolar@evsu.edu.ph', '2021-255559'),
+(92, '$2y$10$Lv5lz1yp2o7wNFPduVmZz.8/qRwl4EhHMF6BhGYXkEl8i9uU1I6my', 'Matthew Solar', 'BTVTED_AFA', 'matthewsolar@evsu.edu.ph', '2021-2555555'),
+(93, '$2y$10$6bnayaQOMoshwLMWRgBOmu3elQqpVhjfJ1BnGkHXjBgzEuLiIor1q', 'Eric', 'BSED_SCIENCE', 'matthewsolar@evsu.edu.ph', '2021-12345'),
+(94, '$2y$10$XPFsG4Suo0/3WsMxlD2VCe6M3B2hmsLA.Gv5EDVDUKBdZ7co53pIa', 'Luisses', 'BS_ENTREP', 'matthewsolar@evsu.edu.ph', '2021-123456'),
+(95, '$2y$10$AqSmwwBmLxVpMqQUdL6sIuuKxhv0H06PhgoI70dEb315JEKm.A7QK', 'Goten', 'BS_ENTREP', 'matthewsolar@evsu.edu.ph', '2021-1234567'),
+(96, '$2y$10$tR8mUyvDHDE3rfiSqa9S3.UhY/81YCFcVL.9alvCjmM.Y8z4m1BVS', 'Koreek', 'BSED_SCIENCE', 'matthewsolar@evsu.edu.ph', '2021-12345678'),
+(97, '$2y$10$wy5gAtBaXMHkjbqi9WUgF.QyCzRW6pTmwUvanycjhrIZRaCPg..SC', 'Kalaw', 'BSFI', 'matthewsolar@evsu.edu.ph', '2021-123456789');
 
 -- --------------------------------------------------------
 
@@ -186,17 +210,6 @@ CREATE TABLE `votes` (
   `candidate_id` int(11) NOT NULL,
   `position_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `votes`
---
-
-INSERT INTO `votes` (`id`, `voters_id`, `candidate_id`, `position_id`) VALUES
-(168, 54, 65, 26),
-(169, 55, 63, 25),
-(170, 55, 65, 26),
-(171, 56, 63, 25),
-(172, 56, 66, 26);
 
 -- --------------------------------------------------------
 
@@ -283,7 +296,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `candidates`
 --
 ALTER TABLE `candidates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -295,13 +308,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `countdown`
 --
 ALTER TABLE `countdown`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- AUTO_INCREMENT for table `positions`
 --
 ALTER TABLE `positions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `tb_image`
@@ -313,13 +326,13 @@ ALTER TABLE `tb_image`
 -- AUTO_INCREMENT for table `voters`
 --
 ALTER TABLE `voters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `votes`
 --
 ALTER TABLE `votes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=429;
 
 --
 -- AUTO_INCREMENT for table `voting_list`
