@@ -51,6 +51,7 @@ require_once('../tcpdf/tcpdf.php');
 // Date and Time Based on the Location
 date_default_timezone_set('Asia/Manila');
 
+
 // Extend the TCPDF class to create a custom header
 class MYPDF extends TCPDF
 {
@@ -58,14 +59,23 @@ class MYPDF extends TCPDF
     public function Header()
     {
         if ($this->getPage() == 1) {
+            // Set image file path
+            $image_file = '../images/header.png'; // Assuming the image is stored in the images directory of TCPDF
+
+            // Add the image as a header
+            $this->Image($image_file, 10, 10, 190, '', 'PNG', '', 'T', false, 500, '', false, false, 0, false, false, false);
+
             // Set font
-            $this->SetFont('helvetica', 'I', 10);
-            // Title
-            $this->Cell(0, 10, date('Y-m-d H:i:s'), 0, 1, 'L');
+            $this->SetFont('helvetica', 'I', 8);
+
+            // Add date on the header
+            $this->SetY(30); // Adjust based on your header height
+            $this->Cell(0, 30, date('Y-m-d H:i:s'), 0, 1, 'L');
         }
     }
 }
 
+// Create new PDF document
 $pdf = new MYPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetTitle('Result: ' . $title);
@@ -74,7 +84,7 @@ $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 $pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 $pdf->SetDefaultMonospacedFont('helvetica');
 $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-$pdf->SetMargins(PDF_MARGIN_LEFT, '10', PDF_MARGIN_RIGHT);
+$pdf->SetMargins(PDF_MARGIN_LEFT, '50', PDF_MARGIN_RIGHT); // Adjust top margin to avoid overlap with header image
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetAutoPageBreak(TRUE, 10);
 $pdf->SetFont('helvetica', '', 11);
