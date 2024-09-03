@@ -60,44 +60,46 @@ class MYPDF extends TCPDF
     // Page header
     public function Header()
     {
-        // No header on this page, add nala manually didto ha content content.
+        $this->SetY(-20);
+        // Set font
+        $this->SetFont('helvetica', 'B', 14);
+        // Page number
+        $this->Cell(0, 10, 'Date' . ' | ' . date('Y-m-d H:i:s'), 0, 0, 'C');
     }
 }
 
 // Set the custom size for the thermal printer (58mm width)
-$pdf = new MYPDF('P', PDF_UNIT, array(58, 200), true, 'UTF-8', false); // 200mm is an arbitrary height; adjust as needed
+$pdf = new MYPDF('P', PDF_UNIT, array(110, 150), true, 'UTF-8', false); // Custom size paper: 58mm x 210mm
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetTitle('Result: ');
 $pdf->SetHeaderData('', '', PDF_HEADER_TITLE, PDF_HEADER_STRING);
-$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', 6)); // Smaller font size for header
-$pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', 6)); // Smaller font size for footer
+$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, 'B', 10)); // Adjusted font size for header
+$pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', 10)); // Adjusted font size for footer
 $pdf->SetDefaultMonospacedFont('helvetica');
 $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-$pdf->SetMargins(PDF_MARGIN_LEFT, '5', PDF_MARGIN_RIGHT); // Reduced margins for thermal printing
+$pdf->SetMargins(1, '5', 1); // Adjusted margins for custom width
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-$pdf->SetAutoPageBreak(TRUE, 10);
-$pdf->SetFont('helvetica', '', 6); // Smaller font size for main content
+$pdf->SetAutoPageBreak(TRUE, 10); // Adjust page break for custom size
+$pdf->SetFont('helvetica', 'B', 16); // Adjusted font size for main content
 $pdf->AddPage();
 
 // Get the voter ID from the session
 $voterID = $_SESSION['voter'];
 
 if (!$voterID) {
-    die("No voter ID found in session.");
+    die("No voter ID found.");
 }
 
 // Add time and Cast Results header
 $content = '';
 $content .= '
-    <div align="center" style="font-size: 6px;">' . date('Y-m-d H:i:s') . '</div> <!-- Time at the top -->
-    <h2 align="center" style="font-size: 8px;">Cast Results</h2> <!-- Title below the time -->
-    <h4 align="center" style="font-size: 6px;">Casted Votes</h4> <!-- Smaller font size for the subtitle -->
-    <table border="1" cellspacing="0" cellpadding="1">  
+    <h4 align="center" style="font-size: 15px;">Casted Votes</h4> <!-- Smaller font size for the subtitle -->
+    <table border="1" cellspacing="0" cellpadding="2" style="width: 100%;">  
         <thead>
             <tr>
-                <th width="33.3%" style="font-size: 5px;">Voter</th> <!-- Smaller font size for table headers -->
-                <th width="33.3%" style="font-size: 5px;">Candidate</th>
-                <th width="33.3%" style="font-size: 5px;">Position</th>
+                <th width="33.3%" style="font-size: 14px;">Voter</th> <!-- Adjusted font size for table headers -->
+                <th width="33.3%" style="font-size: 14px;">Candidate</th>
+                <th width="33.3%" style="font-size: 14px;">Position</th>
             </tr>
         </thead>
         <tbody>
@@ -107,20 +109,40 @@ $content .= generateRow($conn, $voterID); // Generate the rows of the table for 
 $content .= '</tbody></table>';
 
 // Output the content into the PDF
+// Write the HTML content
+// Write the HTML content
 $pdf->writeHTML($content, true, false, true, false, '');
 
-// Add the signature line and text at the bottom of the table
-$pdf->SetY($pdf->GetY() + 5); // Move 5mm down from the end of the table
-$pdf->SetFont('helvetica', '', 6); // Smaller font size for signature line and text
+// Move down 5mm from the end of the table
+$pdf->SetY($pdf->GetY() + 5);
 
-// Draw the line
-$pdf->Line(10, $pdf->GetY(), 48, $pdf->GetY()); // Adjusted for 58mm width
+// Set font size and bold for the signature line and text
+$pdf->SetFont('helvetica', 'B', 10);
 
-// Add the text below the line
+// Draw the voter's signature line
+$pdf->Line(1, $pdf->GetY(), 34, $pdf->GetY()); // Line for assessor's signature (half width)
+
+// Add the voter's signature text below the line
 $pdf->SetY($pdf->GetY() + 2); // Move 2mm down from the line
-$pdf->Cell(0, 5, 'Name & Signature of the Assesstor', 0, 1, 'L');
+$pdf->Cell(37, 1, 'Voter\'s Signature', 0, 0, 'L');
 
+// Move back up and to the right for the voter's signature
+$pdf->SetY($pdf->GetY() - 2); // Move back up 2mm
+$pdf->SetX(40); // Move to the right side for the assesor's signature
+
+// Draw the assesor's signature line
+$pdf->Line(53, $pdf->GetY(), 105, $pdf->GetY()); // Line for assesor's signature (half width)
+
+// Add the assesor's signature text below the line
+$pdf->SetY($pdf->GetY() + 2); // Move 2mm down from the line
+$pdf->SetX(53); // Adjust X position again
+$pdf->Cell(37, 1, 'Assessor\'s Name &  Signature', 0, 0, 'L');
+
+// Output the PDF document
 $pdf->Output('election_result.pdf', 'I');
+
+
+
 
 
 

@@ -188,7 +188,7 @@ $course = $_SESSION['courses']; ?>
 										$candidate = '';
 									}
 
-									// echo $course = $_SESSION['courses'];
+									// echo $course = $_SESSION['voter_phone'];
 
 									?>
 									<div class="text-center">
