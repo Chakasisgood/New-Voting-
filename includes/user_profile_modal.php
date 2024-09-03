@@ -5,49 +5,42 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><b>User Profile</b></h4>
+        <h4 class="modal-title"><b>Voters Profile</b></h4>
       </div>
       <div class="modal-body">
         <form class="form-horizontal" method="POST" action="profile_update.php?return=<?php echo basename($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data">
           <div class="form-group">
-            <label for="username" class="col-sm-3 control-label">Username</label>
-
+            <label for="fullname" class="col-sm-3 control-label">Fullname</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="username" name="username" value="<?php echo $user['username']; ?>">
+              <input type="text" class="form-control" id="fullname" name="fullname" value="<?php echo $voter['fullname']; ?>">
             </div>
           </div>
           <div class="form-group">
             <label for="password" class="col-sm-3 control-label">Password</label>
-
             <div class="col-sm-9">
-              <input type="password" class="form-control" id="password" name="password" value="<?php echo $user['password']; ?>">
+              <input type="password" class="form-control" id="password" name="password" value="<?php echo $voter['password']; ?>">
             </div>
           </div>
           <div class="form-group">
-            <label for="firstname" class="col-sm-3 control-label">Firstname</label>
-
+            <label for="course" class="col-sm-3 control-label">Course</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $user['firstname']; ?>">
+              <input type="course" class="form-control" id="course" name="course" value="<?php echo $voter['course']; ?>">
             </div>
           </div>
           <div class="form-group">
-            <label for="lastname" class="col-sm-3 control-label">Lastname</label>
-
+            <label for="email" class="col-sm-3 control-label">Evsu Email</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $user['lastname']; ?>">
+              <input type="text" class="form-control" id="email" name="email" value="<?php echo $voter['email']; ?>">
             </div>
           </div>
           <div class="form-group">
-            <label for="photo" class="col-sm-3 control-label">Photo:</label>
-
+            <label for="studentid" class="col-sm-3 control-label">Student Id</label>
             <div class="col-sm-9">
-              <input type="file" id="photo" name="photo">
+              <input type="text" class="form-control" id="studentid" name="studentid" value="<?php echo $voter['studentid']; ?>">
             </div>
           </div>
-          <hr>
           <div class="form-group">
             <label for="curr_password" class="col-sm-3 control-label">Current Password:</label>
-
             <div class="col-sm-9">
               <input type="password" class="form-control" id="curr_password" name="curr_password" placeholder="input current password to save changes" required>
             </div>

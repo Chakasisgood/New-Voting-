@@ -17,7 +17,7 @@
               <!-- User image -->
               <li class="user-footer">
                 <!-- <div class="pull-left">
-                  <a href="#profile" data-toggle="modal" class='btn btn-success btn-sm btn-flat' id="admin_profile">Update</a>
+                  <a href="#profile" data-toggle="modal" class='btn btn-success btn-sm btn-flat'>Update</a>
                 </div> -->
                 <div class="pull-right">
                   <a id="logoutButton" class='btn btn-danger btn-sm btn-flat'>Sign out</a>
@@ -32,3 +32,4 @@
     <!-- /.container-fluid -->
   </nav>
 </header>
+<?php include 'includes/user_profile_modal.php'; ?>
