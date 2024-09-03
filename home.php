@@ -334,10 +334,16 @@ $course = $_SESSION['courses']; ?>
 							var errmsg = '';
 							var messages = response.message;
 							for (i in messages) {
-								errmsg += messages[i];
+								errmsg += messages[i] + '\n';
 							}
-							$('.message').html(errmsg);
-							$('#alert').show();
+
+							// Use SweetAlert2 to display the error message
+							Swal.fire({
+								icon: 'error',
+								title: 'Error',
+								text: errmsg,
+								confirmButtonText: 'OK'
+							});
 						} else {
 							$('#preview_modal').modal('show');
 							$('#preview_body').html(response.list);

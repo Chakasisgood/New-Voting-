@@ -15,7 +15,7 @@ while ($row = $query->fetch_assoc()) {
 		if ($row['max_vote'] > 1) {
 			if (count($_POST[$position]) > $row['max_vote']) {
 				$output['error'] = true;
-				$output['message'][] = '<li>You can only choose ' . $row['max_vote'] . ' candidates for ' . $row['description'] . '</li>';
+				$output['message'][] = 'You can only choose ' . $row['max_vote'] . ' candidates for ' . $row['description'];
 			} else {
 				foreach ($_POST[$position] as $key => $values) {
 					$sql = "SELECT * FROM candidates WHERE id = '$values'";
