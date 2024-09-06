@@ -94,6 +94,7 @@ $course = $_SESSION['courses']; ?>
 							?>
 								<div class="text-center">
 									<h3>You have already voted for this election.</h3>
+									<h2>THANK YOU &#x1F389; </h2>
 									<a href="printcast.php" class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</a>
 								</div>
 							<?php
@@ -107,18 +108,9 @@ $course = $_SESSION['courses']; ?>
 									$candidate = '';
 									$course = $_SESSION['courses'];
 
-									$evsu_course = [
-										'BSIT' => 'BSIT',
-										'BTVTED_AFA' => 'BTVTED_AFA',
-										'BSED_MATH' => 'BSED_MATH',
-										'BSED_SCIENCE' => 'BSED_SCIENCE',
-										'BS_ENTREP' => 'BS_ENTREP',
-										'BSFI' => 'BSFI'
-									];
-
 									// Check if the course exists in the map
-									if (array_key_exists($course, $evsu_course)) {
-										$description = $evsu_course[$course];
+									if ($course) {
+										$description = $course;
 										$sql = "SELECT * FROM positions WHERE description = '$description' OR description IN ('President', 'Vice-President') ORDER BY priority ASC";
 									} else {
 										// Default SQL query if the course does not exist in the map
