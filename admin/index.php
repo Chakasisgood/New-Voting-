@@ -10,7 +10,7 @@ if (isset($_SESSION['admin'])) {
 <body class="hold-transition login-page">
 	<div class="login-box">
 		<div class="login-logo">
-			<b>SUPREME STUDENT GOVERNMENT ADMIN COMMISSION</b>
+			<b>SUPREME STUDENT GOVERMENT ADMIN COMMISSION</b>
 		</div>
 
 		<div class="login-box-body">
@@ -49,8 +49,6 @@ if (isset($_SESSION['admin'])) {
 			// Clear the error message from the session
 			unset($_SESSION['error']);
 		}
-
-
 		?>
 	</div>
 

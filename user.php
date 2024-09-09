@@ -13,9 +13,31 @@ if (isset($_SESSION['voter'])) {
 
 <style>
   #countdown {
-    font-size: 20px;
+    font-family: 'Arial', sans-serif;
+    font-size: 15px;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+
+    /* Matches your preferred color */
+    width: fit-content;
+    margin: 20px auto;
+    letter-spacing: 1.5px;
+    background: rgba(255, 255, 255, 0.2);
+
+  }
+
+  #countdown span {
     font-weight: bold;
-    opacity: 0.8;
+    color: #e63946;
+    margin: 0 5px;
+  }
+
+  #countdown-label {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #555;
   }
 
   .form-group {
