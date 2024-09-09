@@ -109,8 +109,7 @@ $course = $_SESSION['courses']; ?>
 									$course = $_SESSION['courses'];
 
 									// Check if the course exists in the map
-									if ($course) {
-										$description = $course;
+									if ($description = $course) {
 										$sql = "SELECT * FROM positions WHERE description = '$description' OR description IN ('President', 'Vice-President') ORDER BY priority ASC";
 									} else {
 										// Default SQL query if the course does not exist in the map
@@ -120,7 +119,7 @@ $course = $_SESSION['courses']; ?>
 									$query = $conn->query($sql);
 									$query = $conn->query($sql);
 									while ($row = $query->fetch_assoc()) {
-										$sql = "SELECT * FROM candidates WHERE position_id='" . $row['id'] . "'";
+										$sql = "SELECT * FROM candidates WHERE position_id='	" . $row['id'] . "'";
 										$cquery = $conn->query($sql);
 										while ($crow = $cquery->fetch_assoc()) {
 											$slug = slugify($row['description']);
@@ -250,20 +249,6 @@ $course = $_SESSION['courses']; ?>
 			}
 		}, 1000);
 
-
-		//if there are 3 selected candidates
-		// function showAlert(message) {
-		// 	Swal.fire({
-		// 		icon: 'error',
-		// 		title: 'Oops...',
-		// 		text: message,
-		// 		confirmButtonText: 'OK'
-		// 	});
-		// }
-
-		// function handleLoginError(errorMessage) {
-		// 	showAlert(errorMessage);
-		// }
 
 
 		// set if the check box was clicked

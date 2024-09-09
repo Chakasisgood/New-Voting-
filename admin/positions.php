@@ -64,7 +64,7 @@
           <div class="col-xs-12">
             <div class="box">
               <div class="box-header with-border">
-                <!-- <a href="#addnew" data-toggle="modal" id="button" class="btn btn-primary btn-sm btn-flat"><i></i>Add New Positions</a> -->
+                <a href="#addnew" data-toggle="modal" id="button" class="btn btn-primary btn-sm btn-flat"><i></i>Add New Positions</a>
               </div>
               <div class="box-body">
                 <table id="example1" class="table table-bordered">
@@ -84,14 +84,14 @@
                           <td>" . $row['description'] . "</td>
                           <td>" . $row['max_vote'] . "</td>
                           <td>
-                            
+                            <button id='button' class='btn btn-success btn-sm edit btn-flat' data-id='" . $row['id'] . "'><i></i> Edit</button>
                             <button id='button' class='btn btn-danger btn-sm delete btn-flat' data-id='" . $row['id'] . "' ><i</i> Delete</button>
                           </td>
                         </tr>
                       ";
                     }
                     ?>
-                    <!-- <button id='button' class='btn btn-success btn-sm edit btn-flat' data-id='" . $row['id'] . "'><i></i> Edit</button> -->
+
 
                   </tbody>
                 </table>

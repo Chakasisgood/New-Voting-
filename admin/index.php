@@ -10,7 +10,7 @@ if (isset($_SESSION['admin'])) {
 <body class="hold-transition login-page">
 	<div class="login-box">
 		<div class="login-logo">
-			<b>ELECTION ADMIN COMMISSION</b>
+			<b>SUPREME STUDENT GOVERNMENT ADMIN COMMISSION</b>
 		</div>
 
 		<div class="login-box-body">
