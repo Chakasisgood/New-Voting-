@@ -35,38 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $stmt->close();
     }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Fetch ENUM values for the course column
-    $tableName = 'voters'; // Table name
-    $columnName = 'course'; // ENUM column name
-
-    // Query the information schema to get ENUM values
-    $sql = "SELECT COLUMN_TYPE 
-            FROM INFORMATION_SCHEMA.COLUMNS 
-            WHERE TABLE_NAME = '$tableName' 
-            AND COLUMN_NAME = '$columnName'";
-
-    $result = $conn->query($sql);
-
-    if ($result && $row = $result->fetch_assoc()) {
-        // Extract ENUM values from the COLUMN_TYPE
-        $enumType = $row['COLUMN_TYPE'];
-        preg_match('/^enum\((.*)\)$/i', $enumType, $matches);
-
-        if (isset($matches[1])) {
-            $enumValues = explode(',', $matches[1]);
-            $enumValues = array_map(function ($value) {
-                return trim($value, "'"); // Remove single quotes
-            }, $enumValues);
-
-            $response['courses'] = $enumValues;
-            $response['success'] = true;
-        } else {
-            $response['message'] = 'Failed to parse ENUM values.';
-        }
-    } else {
-        $response['message'] = 'Failed to fetch ENUM column details.';
-    }
 }
 
 $conn->close();

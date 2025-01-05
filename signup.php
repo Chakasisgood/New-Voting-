@@ -1,6 +1,7 @@
 <?php
 include 'includes/header.php';
 include 'includes/srcipts.php';
+include 'includes/conn.php';
 
 ?>
 
@@ -32,9 +33,17 @@ include 'includes/srcipts.php';
                 <div class="form-group">
                     <label for="course" class="col-sm-3 control-label" style="color: #e8d52a; letter-spacing: 1.5px;">Course</label>
                     <div class="col-sm-9">
-                        <select id="course" name="course" class="form-control" required>
-                            <option value="">Select Course</option>
-                            <!-- Options will be dynamically added here -->
+                        <select class="form-control" id="course" name="course">
+                            <option value="" selected>- Select -</option>
+                            <?php
+                            $sql = "SELECT * FROM courses";
+                            $query = $conn->query($sql);
+                            while ($row = $query->fetch_assoc()) {
+                                echo "
+                                    <option value='" . $row['id'] . "'>" . $row['course'] . "</option>
+                                ";
+                            }
+                            ?>
                         </select>
                     </div>
                 </div>
@@ -69,38 +78,6 @@ include 'includes/srcipts.php';
     <?php include 'includes/scripts.php'; ?>
 
     <script>
-        // Fetch the courses from the server
-        fetch('signup_modal.php')
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    var courseSelect = document.getElementById('course');
-
-                    // Add options to the dropdown
-                    data.courses.forEach(function(course) {
-                        var option = document.createElement('option');
-                        option.value = course;
-                        option.textContent = course;
-                        courseSelect.appendChild(option);
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: data.message || 'Failed to fetch courses.',
-                        confirmButtonText: 'OK'
-                    });
-                }
-            })
-            .catch(error => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'An error occurred while fetching courses.',
-                    confirmButtonText: 'OK'
-                });
-            });
-
         // Fetching Student ID
         document.getElementById('studentid').addEventListener('input', function() {
             var studentId = this.value;
@@ -167,7 +144,7 @@ include 'includes/srcipts.php';
                                     confirmButtonText: 'OK'
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        window.location.href = 'user.php'; // Redirect to user.php
+                                        window.location.href = 'index.php'; // Redirect to index.php
                                     }
                                 });
                             } else {

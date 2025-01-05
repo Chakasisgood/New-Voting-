@@ -70,8 +70,8 @@
                   </button>
                   <ul class="dropdown-menu">
                     <?php
-                    // Retrieve distinct courses from the 'voters' table
-                    $sql = "SELECT DISTINCT course FROM voters ORDER BY course ASC";
+                    // Retrieve all courses from the 'courses' table
+                    $sql = "SELECT course FROM courses ORDER BY course ASC";
                     $courseQuery = $conn->query($sql);
                     while ($courseRow = $courseQuery->fetch_assoc()) {
                       echo "<li><a href='#' class='course-button' data-course='" . $courseRow['course'] . "'>" . $courseRow['course'] . "</a></li>";
@@ -81,6 +81,7 @@
                     <li><a href='#' class='course-button' data-course='all'>Show All</a></li>
                   </ul>
                 </div>
+
               </div>
               <div class="box-body">
                 <table id="example1" class="table table-bordered">
@@ -92,22 +93,26 @@
                   </thead>
                   <tbody id="voterTableBody">
                     <?php
-                    $sql = "SELECT * FROM voters";
+                    $sql = "SELECT voters.*, courses.course AS course_name 
+                      FROM voters 
+                      LEFT JOIN courses ON voters.course = courses.id";
                     $query = $conn->query($sql);
                     while ($row = $query->fetch_assoc()) {
                       echo "
-                                <tr class='student-row' data-course='" . $row['course'] . "'>
-                                    <td>" . $row['fullname'] . "</td>
-                                    <td>" . $row['course'] . "</td>
-                                    <td>" . $row['studentid'] . "</td>
-                                    <td>
-                                        <button class='btn btn-success btn-sm edit btn-flat' data-id='" . $row['id'] . "'><i></i> Edit</button>
-                                        <button class='btn btn-danger btn-sm delete btn-flat' data-id='" . $row['id'] . "'><i></i> Delete</button>
-                                    </td>
-                                </tr>
-                            ";
+                        <tr class='student-row' data-course='" . $row['course_name'] . "'>
+                            <td>" . $row['fullname'] . "</td>
+                            <td>" . $row['course_name'] . "</td>
+                            <td>" . $row['studentid'] . "</td>
+                            <td>
+                                
+                                <button class='btn btn-danger btn-sm delete btn-flat' data-id='" . $row['id'] . "'><i></i> Delete</button>
+                            </td>
+                        </tr>
+                    ";
                     }
                     ?>
+                    <!-- <button class='btn btn-success btn-sm edit btn-flat' data-id='" . $row['id'] . "'><i></i> Edit</button> -->
+
                   </tbody>
                 </table>
               </div>

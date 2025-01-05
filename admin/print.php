@@ -43,8 +43,17 @@ function generateRow($conn)
     return $contents;
 }
 
-$parse = parse_ini_file('config.ini', FALSE, INI_SCANNER_RAW);
-$title = $parse['election_title'];
+$sql = "SELECT titles FROM title ORDER BY id DESC LIMIT 1"; // This gets the latest entry
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Fetch the title
+    $row = $result->fetch_assoc();
+    $title = $row['titles'];
+} else {
+    echo "<h1>No title found</h1>"; // Fallback if no title is found in the database
+}
+
 
 require_once('../tcpdf/tcpdf.php');
 
@@ -107,6 +116,7 @@ $pdf->SetY(-50); // Position the line 50mm from the bottom of the page
 $pdf->SetFont('helvetica', '', 11);
 
 // Draw the line
+$pdf->Cell(0, 10, 'MARK ANTHONY P. NARCISO, MAEd.', 0, 1, 'L');
 $pdf->Line(15, $pdf->GetY(), 80, $pdf->GetY()); // X1, Y1, X2, Y2
 
 // Add the text below the line

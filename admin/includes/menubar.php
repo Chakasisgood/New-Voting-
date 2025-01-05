@@ -29,10 +29,11 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">REPORTS</li>
 
-      <li class="side-bar"><a href="home.php"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
+      <li class="side-bar"><a href="home.php"><i class="fa fa-file-archive-o"></i><span>Dashboard</span></a></li>
       <li class="side-bar"><a href="ballot.php"><i class="fa fa-file-text"></i><span>Ballot Form</span></a></li>
       <li class="side-bar"><a href="votes.php"><i class="fa fa-check-circle"></i><span></span> <span>Cast Votes</span></a></li>
       <li class="header">MANAGE</li>
+      <li class="side-bar"><a href="courses.php"><i class="fa fa-address-book"></i><span>Courses</span></a></li>
       <li class="side-bar"><a href="positions.php"><i class="fa fa-file-powerpoint-o"></i><span>Positions</span></a></li>
       <li class="side-bar"><a href="candidates.php"><i class="fa fa-user-md"></i><span>Candidates</span></a></li>
       <li class="side-bar"><a href="voters.php"><i class="fa fa-user-plus"></i><span>Voters</span></a></li>

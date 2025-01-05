@@ -1,3 +1,7 @@
+<!-- SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<!-- SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- jQuery 3 -->
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -101,6 +105,7 @@
       toggleIcon.classList.add('glyphicon-eye-open');
     }
   });
+
 
   // function limitCheckboxes(checkbox, max) {
   //   console.log('Checking')

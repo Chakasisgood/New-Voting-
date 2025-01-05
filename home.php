@@ -36,9 +36,22 @@ $course = $_SESSION['courses']; ?>
 
 				<!-- Main content -->
 				<section class="content">
+
+
+					<!-- EXTRACTING ELETION TITLE -->
 					<?php
-					$parse = parse_ini_file('admin/config.ini', FALSE, INI_SCANNER_RAW);
-					$title = $parse['election_title'];
+					$sql = "SELECT titles FROM title ORDER BY id DESC LIMIT 1"; // This gets the latest entry
+					$result = $conn->query($sql);
+
+					if ($result->num_rows > 0) {
+						// Fetch the title
+						$row = $result->fetch_assoc();
+						$title = $row['titles'];
+					} else {
+						echo "<h1>No title found</h1>"; // Fallback if no title is found in the database
+					}
+
+
 					?>
 					<h1 class="page-header text-center title"><b><?php echo strtoupper($title); ?></b></h1>
 					<div class="row">
@@ -105,16 +118,38 @@ $course = $_SESSION['courses']; ?>
 									<?php
 									include 'includes/slugify.php';
 
-									$candidate = '';
-									$course = $_SESSION['courses'];
+									$candidate = ''; // Initialize variable to store results (if needed)
+									$course = $_SESSION['courses']; // The course associated with the logged-in user
 
-									// Check if the course exists in the map
-									if ($description = $course) {
-										$sql = "SELECT * FROM positions WHERE description = '$description' OR description IN ('President', 'Vice-President') ORDER BY priority ASC";
+									// Define the SQL query based on the logged-in course
+									if ($course === 'ALL_STUDENTS') {
+										// If logged in as ALL_STUDENTS, fetch all positions available to all students
+										$sql = "SELECT * FROM positions WHERE courses_id = 'ALL_STUDENTS' OR courses_id IS NULL ORDER BY priority ASC";
 									} else {
-										// Default SQL query if the course does not exist in the map
-										$sql = "SELECT * FROM positions WHERE description IN ('President', 'Vice-President') ORDER BY priority ASC";
+										// If logged in as a specific course, fetch positions for that course or ALL_STUDENTS
+										$sql = "SELECT * FROM positions 
+												WHERE courses_id = '$course' OR courses_id = 'ALL_STUDENTS' 
+												ORDER BY priority ASC";
 									}
+
+									// Execute the query
+									$query = $conn->query($sql);
+
+									// Fetch and store the results
+									$positions = []; // Use an array to store results
+									if ($query) {
+										while ($row = $query->fetch_assoc()) {
+											$positions[] = $row; // Add the current row to the results array
+										}
+									} else {
+										// Handle SQL error gracefully
+										echo "Error: " . $conn->error;
+									}
+
+									// Optionally process the data if needed
+									// Example: Output JSON or pass it to the front end
+									// echo json_encode($positions);
+
 
 									$query = $conn->query($sql);
 									$query = $conn->query($sql);

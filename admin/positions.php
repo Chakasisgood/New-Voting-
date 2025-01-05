@@ -84,13 +84,14 @@
                           <td>" . $row['description'] . "</td>
                           <td>" . $row['max_vote'] . "</td>
                           <td>
-                            <button id='button' class='btn btn-success btn-sm edit btn-flat' data-id='" . $row['id'] . "'><i></i> Edit</button>
+                          
                             <button id='button' class='btn btn-danger btn-sm delete btn-flat' data-id='" . $row['id'] . "' ><i</i> Delete</button>
                           </td>
                         </tr>
                       ";
                     }
                     ?>
+                    <!--   <button id='button' class='btn btn-success btn-sm edit btn-flat' data-id='" . $row['id'] . "'><i></i> Edit</button> -->
 
 
                   </tbody>
@@ -99,7 +100,7 @@
             </div>
           </div>
         </div>
-      </section>>
+      </section>
 
     </div>
 
@@ -137,6 +138,7 @@
         success: function(response) {
           $('.id').val(response.id);
           $('#edit_description').val(response.description);
+          $('#posselect').val(response.courses_id);
           $('#edit_max_vote').val(response.max_vote);
           $('.description').html(response.description);
         }

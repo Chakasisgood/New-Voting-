@@ -252,7 +252,7 @@
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        document.getElementById("countdown").innerHTML = "VOTING ARE NOW OFFICIALY OPEN FOR: " + days + "d " + hours + "h " +
+        document.getElementById("countdown").innerHTML = "VOTINGS ARE NOW OFFICIALLY OPEN FOR: " + days + "d " + hours + "h " +
           minutes + "m " + seconds + "s ";
 
         if (distance < 0) {
